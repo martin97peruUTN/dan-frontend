@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/dan-frontend/static/css/main.a3c32b6f.chunk.css",
+    "main.js": "/dan-frontend/static/js/main.319b2530.chunk.js",
+    "main.js.map": "/dan-frontend/static/js/main.319b2530.chunk.js.map",
+    "runtime-main.js": "/dan-frontend/static/js/runtime-main.8cd778df.js",
+    "runtime-main.js.map": "/dan-frontend/static/js/runtime-main.8cd778df.js.map",
+    "static/css/2.5c85b98a.chunk.css": "/dan-frontend/static/css/2.5c85b98a.chunk.css",
+    "static/js/2.01798733.chunk.js": "/dan-frontend/static/js/2.01798733.chunk.js",
+    "static/js/2.01798733.chunk.js.map": "/dan-frontend/static/js/2.01798733.chunk.js.map",
+    "static/js/3.6a0e9c94.chunk.js": "/dan-frontend/static/js/3.6a0e9c94.chunk.js",
+    "static/js/3.6a0e9c94.chunk.js.map": "/dan-frontend/static/js/3.6a0e9c94.chunk.js.map",
+    "index.html": "/dan-frontend/index.html",
+    "static/css/2.5c85b98a.chunk.css.map": "/dan-frontend/static/css/2.5c85b98a.chunk.css.map",
+    "static/css/main.a3c32b6f.chunk.css.map": "/dan-frontend/static/css/main.a3c32b6f.chunk.css.map",
+    "static/js/2.01798733.chunk.js.LICENSE.txt": "/dan-frontend/static/js/2.01798733.chunk.js.LICENSE.txt",
+    "static/media/primeicons.css": "/dan-frontend/static/media/primeicons.e61f3495.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8cd778df.js",
+    "static/css/2.5c85b98a.chunk.css",
+    "static/js/2.01798733.chunk.js",
+    "static/css/main.a3c32b6f.chunk.css",
+    "static/js/main.319b2530.chunk.js"
+  ]
+}
