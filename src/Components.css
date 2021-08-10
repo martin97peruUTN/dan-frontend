@@ -1,0 +1,65 @@
+@import url("Colors.css");
+
+body {
+    background-color: var(--light);
+}
+.App {
+    text-align: center;
+}
+
+.dropdown-menu {
+    background-color: var(--primary) !important;
+    padding: 0;
+    border-radius: 5px;
+}
+.dropdown-item>.nav-link {
+    color: var(--text-primary) !important;
+}
+.dropdown-item:first-child {
+    border-radius: 5px 5px 0 0;
+}
+.dropdown-item:last-child {
+    border-radius: 0 0 5px 5px;
+}
+.dropdown-item:hover {
+    background-color: var(--light) !important;
+}
+
+.navbar {
+    background-color: var(--primary) !important;
+}
+
+.nav-link, .navbar-brand {
+    color: var(--text-primary) !important;
+    border-radius: 5px;
+}
+
+.dropdown-toggle:hover {
+    background-color: var(--light) !important;
+}
+
+.navbar-btn {
+    background-color: var(--dark);
+    color: var(--text-primary) !important
+}
+.navbar-btn:hover {
+    background-color: var(--light) !important;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    width: 90%;
+    margin: 10px auto;
+    /*max-width: 900px;*/
+}
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+}
+.btn-primary:hover{
+    background-color: var(--light) !important;
+}
