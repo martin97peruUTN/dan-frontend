@@ -1,12 +1,12 @@
 import React from 'react'
-import CardBase from '../cards/Card'
+import Card from '../components/cards/Card'
 
 const PageNotFound = () => {
     return (
         <div>
-            <CardBase>
+            <Card>
                 <h1 class="display-4">No se encontró la pagina</h1>
-            </CardBase>
+            </Card>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {urlBase} from '../../Url'
-import Card from '../cards/Card'
+import {urlBase} from '../Url'
+import Card from '../components/cards/Card'
 
 const ListadoClientes = () => {
 
