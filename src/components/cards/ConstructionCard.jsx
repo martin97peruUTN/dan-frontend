@@ -4,13 +4,9 @@ import CardSecondary from './CardSecondary'
 const ConstructionCard = (props) => {
 
     const [construction, setConstruction] = useState({})
-    //(event) => setNewClient({constructions: [...constructions, event.target.value]})
 
     const handleClick = (event) => {
         event.preventDefault();
-        /*props.setConstructions(
-            [...props.constructions, construction]
-        )*/
         props.setNewClient({
             ...props.newClient,
             constructions: [...props.newClient.constructions, construction]
@@ -61,7 +57,7 @@ const ConstructionCard = (props) => {
                 placeholder="Tipo de obra"
                 onChange={(event) => setConstruction({...construction, constructionKind:event.target.value})}
             />
-            <button type="success" class="btn btn-primary" onClick={(event) => handleClick(event)}>Add</button>
+            <button class="btn btn-primary" onClick={(event) => handleClick(event)}>Add</button>
         </CardSecondary>
     )
 }

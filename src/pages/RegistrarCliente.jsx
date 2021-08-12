@@ -5,13 +5,29 @@ import ConstructionCard from '../components/cards/ConstructionCard';
 const RegistrarCliente = () => {
 
     const [newClient, setNewClient] = useState({
-        constructions: []
+        constructions: [{id: 1}]
     });
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(newClient);
     }
+
+    const handleAddConstruction = (event) => {
+        event.preventDefault();
+
+    }
+
+    const handleDeleteConstruction = (event) => {
+        event.preventDefault();
+
+    }
+
+    const ConstructionsList = newClient.constructions.map((cont, index) => (
+        <ConstructionCard
+            key={cont.id}
+        />
+    ))
 
     return (
         <form onSubmit={handleSubmit}>
@@ -55,7 +71,8 @@ const RegistrarCliente = () => {
             </Card>
             <Card>
                 <h3>Obras</h3>
-                <ConstructionCard newClient={newClient} setNewClient={setNewClient} />
+                {ConstructionsList}
+                <button class="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</button>
             </Card>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
