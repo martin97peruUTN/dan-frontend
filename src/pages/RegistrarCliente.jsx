@@ -1,31 +1,62 @@
 import React, {useState, useEffect} from 'react';
 import Card from '../components/cards/Card';
 import ConstructionCard from '../components/cards/ConstructionCard';
+import axios from 'axios';
+import {userService} from '../Url'
 
 const RegistrarCliente = () => {
 
     const [newClient, setNewClient] = useState({
-        constructions: [{id: 1}]
+        user:{
+            "tipoUsuario":{
+                "id":2
+            }
+        },
+        obras: [{}]
     });
+
+    //funcion auxiliar para actualizar el user dentro de newClient
+    const setTipoUsuario = (prop, value) => {
+        let user = newClient.user;
+        user[prop] = value;
+        setNewClient({...newClient, user})
+    }
+
+    const setObra = (prop, value) => {
+
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(newClient);
+        axios.post(userService+'/cliente', newClient)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
     const handleAddConstruction = (event) => {
         event.preventDefault();
-
+        setNewClient({...newClient, obras: [...newClient.obras, {}]})
     }
 
-    const handleDeleteConstruction = (event) => {
-        event.preventDefault();
-
+    const handleDeleteConstruction = (index) => {
+        const obrasCopy = [...newClient.obras]
+        obrasCopy.splice(index, 1);
+        setNewClient({...newClient, obras: obrasCopy})
     }
 
-    const ConstructionsList = newClient.constructions.map((cont, index) => (
+    const ConstructionsList = newClient.obras.map((obra, index) => (
         <ConstructionCard
-            key={cont.id}
+            key={index}
+            obra = {obra}
+            setObra = {setObra}
+            newClient = {newClient}
+            setNewClient = {setNewClient}
+            onDelete = {() => handleDeleteConstruction(index)}
         />
     ))
 
@@ -38,35 +69,35 @@ const RegistrarCliente = () => {
                     type="text"
                     class="form-control"
                     placeholder="Usuario"
-                    onChange={(event) => setNewClient({...newClient, user: event.target.value})}
+                    onChange={(event) => setTipoUsuario("user", event.target.value)}
                 />
                 <label class="form-label">Contraseña</label>
                 <input
                     type="password"
                     class="form-control"
                     placeholder="Contraseña"
-                    onChange={(event) => setNewClient({...newClient, password: event.target.value})}
+                    onChange={(event) => setTipoUsuario("password", event.target.value)}
                 />
                 <label class="form-label">Razon social</label>
                 <input
                     type="text"
                     class="form-control"
                     placeholder="Razon social"
-                    onChange={(event) => setNewClient({...newClient, businessName: event.target.value})}
+                    onChange={(event) => setNewClient({...newClient, "razonSocial": event.target.value})}
                 />
                 <label class="form-label">CUIT</label>
                 <input
                     type="text"
                     class="form-control"
                     placeholder="CUIT"
-                    onChange={(event) => setNewClient({...newClient, cuit: event.target.value})}
+                    onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})}
                 />
                 <label class="form-label">Mail</label>
                 <input
                     type="text"
                     class="form-control"
                     placeholder="Mail"
-                    onChange={(event) => setNewClient({...newClient, mail: event.target.value})}
+                    onChange={(event) => setNewClient({...newClient, "mail": event.target.value})}
                 />
             </Card>
             <Card>

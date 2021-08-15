@@ -9,8 +9,12 @@ const ConstructionCard = (props) => {
         event.preventDefault();
         props.setNewClient({
             ...props.newClient,
-            constructions: [...props.newClient.constructions, construction]
+            obras: [...props.newClient.obras, construction]
         })
+    }
+
+    const handleOnChange = (event) => {
+
     }
 
     return (
@@ -20,44 +24,45 @@ const ConstructionCard = (props) => {
                 type="text"
                 class="form-control"
                 placeholder="Descripcion"
-                onChange={(event) => setConstruction({...construction, description:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "descripcion":event.target.value})}
             />
             <label class="form-label">Latitud</label>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Latitud"
-                onChange={(event) => setConstruction({...construction, latitude:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "latitud":event.target.value})}
             />
             <label class="form-label">Longitud</label>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Longitud"
-                onChange={(event) => setConstruction({...construction, longitude:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "longitud":event.target.value})}
             />
             <label class="form-label">Direccion</label>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Direccion"
-                onChange={(event) => setConstruction({...construction, direction:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "direccion":event.target.value})}
             />
             <label class="form-label">Superficie</label>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Superficie"
-                onChange={(event) => setConstruction({...construction, surface:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "superficie":event.target.value})}
             />
             <label class="form-label">Tipo de obra</label>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Tipo de obra"
-                onChange={(event) => setConstruction({...construction, constructionKind:event.target.value})}
+                onChange={(event) => setConstruction({...construction, "tipo":event.target.value})}
             />
             <button class="btn btn-primary" onClick={(event) => handleClick(event)}>Add</button>
+            <button class="btn btn-danger" onClick={props.onDelete}>Delete</button>
         </CardSecondary>
     )
 }
