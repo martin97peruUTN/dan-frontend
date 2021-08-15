@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Card from '../components/cards/Card';
 import ConstructionCard from '../components/cards/ConstructionCard';
 import axios from 'axios';
@@ -6,13 +6,15 @@ import {userService} from '../Url'
 
 const RegistrarCliente = () => {
 
+    const[obrasId, setObrasId]=useState(1)
+
     const [newClient, setNewClient] = useState({
         user:{
             "tipoUsuario":{
                 "id":2
             }
         },
-        obras: [{}]
+        obras: [{"id":obrasId-1}]
     });
 
     //funcion auxiliar para actualizar el user dentro de newClient
@@ -22,8 +24,17 @@ const RegistrarCliente = () => {
         setNewClient({...newClient, user})
     }
 
-    const setObra = (prop, value) => {
-
+    //funcion que se dispara cada vez que hay un cambio en una obra
+    //recibe el evento (de donde saca el value), el prop (que campo cambio) y el id
+    //encontrar esa obra en particular en el listado
+    const updateObra = (event, prop, id) => {
+        //busco cual es el id de la obra a actualizar
+        const obraIndex = newClient.obras.findIndex(obra => obra.id === id)
+        const obrasCopy = [...newClient.obras]
+        //actualizo ese dato de esa obra con el valor del evento
+        obrasCopy[obraIndex][prop] = event.target.value;
+        //"piso" el valor de la obra con lo mas nuevo
+        setNewClient({...newClient,obras:obrasCopy})
     }
 
     const handleSubmit = (event) => {
@@ -34,13 +45,15 @@ const RegistrarCliente = () => {
             console.log(response);
         })
         .catch(function (error) {
+            //ver que hacer en este caso
             console.log(error);
         })
     }
 
     const handleAddConstruction = (event) => {
         event.preventDefault();
-        setNewClient({...newClient, obras: [...newClient.obras, {}]})
+        setObrasId(obrasId+1);
+        setNewClient({...newClient, obras: [...newClient.obras, {"id":obrasId}]})
     }
 
     const handleDeleteConstruction = (index) => {
@@ -51,12 +64,9 @@ const RegistrarCliente = () => {
 
     const ConstructionsList = newClient.obras.map((obra, index) => (
         <ConstructionCard
-            key={index}
-            obra = {obra}
-            setObra = {setObra}
-            newClient = {newClient}
-            setNewClient = {setNewClient}
+            key={obra.id}
             onDelete = {() => handleDeleteConstruction(index)}
+            updateObra = {(event, prop) => updateObra(event, prop, obra.id)}
         />
     ))
 
