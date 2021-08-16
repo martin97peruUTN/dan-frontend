@@ -15,7 +15,10 @@ const RegistrarCliente = () => {
             }
         },
         obras: [{
-            "id":obrasId-1
+            "id":obrasId-1,
+            "tipo":{
+                "descripcion":""
+            }
         }]
     });
 
@@ -28,7 +31,7 @@ const RegistrarCliente = () => {
 
     //funcion que se dispara cada vez que hay un cambio en una obra
     //recibe el evento (de donde saca el value), el prop (que campo cambio) y el id
-    //encontrar esa obra en particular en el listado
+    //para encontrar esa obra en particular en el listado
     const updateObra = (event, prop, id) => {
         //busco cual es el id de la obra a actualizar
         const obraIndex = newClient.obras.findIndex(obra => obra.id === id)
@@ -43,23 +46,37 @@ const RegistrarCliente = () => {
         setNewClient({...newClient,obras:obrasCopy})
     }
 
+    const validForm = () =>{
+        let validObras = newClient.obras.every(obra => validObra(obra))
+        return validObras && newClient.razonSocial && newClient.cuit && newClient.mail && newClient["user"]["user"] && newClient["user"]["password"];
+    }
+    const validObra = (obra) => {
+        return obra.descripcion && obra.latitud && obra.longitud && obra.direccion && obra.superficie && obra.tipo.descripcion
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(newClient);
-        axios.post(userService+'/cliente', newClient)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            //ver que hacer en este caso
-            console.log(error);
-        })
+        if(validForm()){
+            console.log("VALIDO");
+            axios.post(userService+'/cliente', newClient)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                //ver que hacer en este caso
+                console.log(error);
+                alert("No se pudo guardar el cliente, intente mas tarde");
+            })
+        }else{
+            alert("FALTAN LLENAR CAMPOS");
+        }
     }
 
     const handleAddConstruction = (event) => {
         event.preventDefault();
         setObrasId(obrasId+1);
-        setNewClient({...newClient, obras: [...newClient.obras, {"id":obrasId}]})
+        setNewClient({...newClient, obras: [...newClient.obras, {"id":obrasId, "tipo":{"descripcion":""}}]})
     }
 
     const handleDeleteConstruction = (index) => {
