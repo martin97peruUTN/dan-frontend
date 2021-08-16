@@ -47,6 +47,7 @@ const ConstructionCard = (props) => {
                 placeholder="Tipo de obra"
                 onChange={(event) => props.updateObra(event, "tipo")}
             />
+            <br/>
             <button class="btn btn-danger" onClick={props.onDelete}>Borrar obra</button>
         </CardSecondary>
     )

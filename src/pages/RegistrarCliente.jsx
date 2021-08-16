@@ -14,7 +14,9 @@ const RegistrarCliente = () => {
                 "id":2
             }
         },
-        obras: [{"id":obrasId-1}]
+        obras: [{
+            "id":obrasId-1
+        }]
     });
 
     //funcion auxiliar para actualizar el user dentro de newClient
@@ -32,7 +34,11 @@ const RegistrarCliente = () => {
         const obraIndex = newClient.obras.findIndex(obra => obra.id === id)
         const obrasCopy = [...newClient.obras]
         //actualizo ese dato de esa obra con el valor del evento
-        obrasCopy[obraIndex][prop] = event.target.value;
+        if(prop==="tipo"){
+            obrasCopy[obraIndex]["tipo"] = {"descripcion": event.target.value};
+        }else{
+            obrasCopy[obraIndex][prop] = event.target.value;
+        }
         //"piso" el valor de la obra con lo mas nuevo
         setNewClient({...newClient,obras:obrasCopy})
     }
