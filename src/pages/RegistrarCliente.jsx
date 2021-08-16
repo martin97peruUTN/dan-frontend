@@ -57,19 +57,23 @@ const RegistrarCliente = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(newClient);
-        if(validForm()){
-            console.log("VALIDO");
-            axios.post(userService+'/cliente', newClient)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                //ver que hacer en este caso
-                console.log(error);
-                alert("No se pudo guardar el cliente, intente mas tarde");
-            })
+        if(newClient.obras.length===0){
+            alert("Debe tener al menos una obra");
         }else{
-            alert("FALTAN LLENAR CAMPOS");
+            if(validForm()){
+                console.log("VALIDO");
+                axios.post(userService+'/cliente', newClient)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    //ver que hacer en este caso
+                    console.log(error);
+                    alert("No se pudo guardar el cliente, intente mas tarde");
+                })
+            }else{
+                alert("FALTAN LLENAR CAMPOS");
+            }
         }
     }
 
@@ -83,6 +87,11 @@ const RegistrarCliente = () => {
         const obrasCopy = [...newClient.obras]
         obrasCopy.splice(index, 1);
         setNewClient({...newClient, obras: obrasCopy})
+    }
+
+    const handleCancel = (event) => {
+        event.preventDefault();
+        alert("Terminar esto")
     }
 
     const ConstructionsList = newClient.obras.map((obra, index) => (
@@ -136,9 +145,15 @@ const RegistrarCliente = () => {
             <Card>
                 <h3>Obras</h3>
                 {ConstructionsList}
-                <button class="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</button>
+                <div class="">
+                    <button class="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</button>
+                </div>
+                <hr/>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-danger" onClick={(event)=> handleCancel(event)}>Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
             </Card>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     )
 }
