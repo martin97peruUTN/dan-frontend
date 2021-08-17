@@ -5,11 +5,11 @@ import Card from './Card'
 const CardTwoColumns = (props) => {
     return (
         <Card>
-            <div class="row">
-                <div class="col-md-10">
+            <div className="row">
+                <div className="col-md-10">
                     {props.leftSide}
                 </div>
-                <div class="col-md-2">
+                <div className="col-md-2">
                     {props.rightSide}
                 </div>
             </div>

@@ -6,8 +6,8 @@ const Card = (props) => {
     //obtengo el gris del archivo css
     const grey = getComputedStyle(document.documentElement).getPropertyValue('--grey');
     return (
-        <div class="card mb-3" style={{backgroundColor: secondary ? grey : 'white'}}>
-            <div class="card-body">
+        <div className="card mb-3" style={{backgroundColor: secondary ? grey : 'white'}}>
+            <div className="card-body">
                 {props.children}
             </div>
         </div>

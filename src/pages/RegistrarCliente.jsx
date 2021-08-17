@@ -1,10 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import Card from '../components/cards/Card';
 import ConstructionCard from '../components/cards/ConstructionCard';
 import axios from 'axios';
 import {userService} from '../Url'
+import { Button } from 'primereact/button'
+import { Toast } from 'primereact/toast';
 
 const RegistrarCliente = ({history}) => {
+
+    const[loading, setLoading] = useState(false)
+    const toast = useRef(null);
 
     const[obrasId, setObrasId]=useState(1)
 
@@ -21,6 +26,10 @@ const RegistrarCliente = ({history}) => {
             }
         }]
     });
+
+    const showError = (message) => {
+        toast.current.show({severity:'error', summary: 'Error', detail:message, life: 3000});
+    }
 
     //funcion auxiliar para actualizar el user dentro de newClient
     const setTipoUsuario = (prop, value) => {
@@ -60,21 +69,22 @@ const RegistrarCliente = ({history}) => {
             alert("Debe tener al menos una obra");
         }else{
             if(validForm()){
+                setLoading(true);
                 console.log("VALIDO");
                 axios.post(userService+'/cliente', newClient)
                 .then(function (response) {
                     //Ver que hago aca
                     console.log(response);
                     history.replace("/")
+                    setLoading(false);
                 })
                 .catch(function (error) {
-                    //ver que hacer en este caso
                     console.log(error);
-                    alert("No se pudo guardar el cliente, intente mas tarde");
-                    //history.replace("/")
+                    showError('No se pudo guardar el cliente, intentelo mas tarde')
+                    setLoading(false);
                 })
             }else{
-                alert("FALTAN LLENAR CAMPOS");
+                showError('FALTAN LLENAR CAMPOS')
             }
         }
     }
@@ -107,39 +117,40 @@ const RegistrarCliente = ({history}) => {
     return (
         <form onSubmit={handleSubmit}>
             <Card>
+                <Toast ref={toast} />
                 <h3>Datos del usuario</h3>
-                <label class="form-label">Usuario</label>
+                <label className="form-label">Usuario</label>
                 <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Usuario"
                     onChange={(event) => setTipoUsuario("user", event.target.value)}
                 />
-                <label class="form-label">Contraseña</label>
+                <label className="form-label">Contraseña</label>
                 <input
                     type="password"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Contraseña"
                     onChange={(event) => setTipoUsuario("password", event.target.value)}
                 />
-                <label class="form-label">Razon social</label>
+                <label className="form-label">Razon social</label>
                 <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Razon social"
                     onChange={(event) => setNewClient({...newClient, "razonSocial": event.target.value})}
                 />
-                <label class="form-label">CUIT</label>
+                <label className="form-label">CUIT</label>
                 <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="CUIT"
                     onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})}
                 />
-                <label class="form-label">Mail</label>
+                <label className="form-label">Mail</label>
                 <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Mail"
                     onChange={(event) => setNewClient({...newClient, "mail": event.target.value})}
                 />
@@ -147,13 +158,13 @@ const RegistrarCliente = ({history}) => {
             <Card>
                 <h3>Obras</h3>
                 {ConstructionsList}
-                <div class="">
-                    <button class="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</button>
+                <div className="">
+                    <Button className="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</Button>
                 </div>
                 <hr/>
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-danger" onClick={(event)=> handleCancel(event)}>Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                <div className="d-flex justify-content-between">
+                    <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
+                    <Button type="submit" className="btn btn-primary" icon="pi pi-check" label="Guardar" loading={loading}></Button>
                 </div>
             </Card>
         </form>

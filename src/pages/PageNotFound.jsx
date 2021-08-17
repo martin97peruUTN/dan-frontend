@@ -5,7 +5,8 @@ const PageNotFound = () => {
     return (
         <div>
             <Card>
-                <h1 class="display-4">No se encontró la pagina</h1>
+                <h1 className="display-4">No se encontró la pagina</h1>
+                <img src="https://pbs.twimg.com/media/EkvSASEW0AMlvSg.jpg" alt="" />
             </Card>
         </div>
     )

@@ -1,16 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import ConstructionCard from '../components/cards/ConstructionCard'
 import Card from '../components/cards/Card'
 import axios from 'axios'
 import {userService} from '../Url'
+import { Button } from 'primereact/button'
+import { Toast } from 'primereact/toast';
 
 const RegistrarObra = ({history}) => {
+
+    const[loading, setLoading] = useState(false)
+    const toast = useRef(null);
 
     const [obra, setObra] = useState({
         "tipo":{
             "descripcion":""
         }
     })
+
+    const showError = (message) => {
+        toast.current.show({severity:'error', summary: 'Error', detail:message, life: 3000});
+    }
 
     const updateObra = (event, prop) => {
         const obraCopy = {...obra}
@@ -30,20 +39,22 @@ const RegistrarObra = ({history}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(validObra()){
+            setLoading(true);
             axios.post(userService+'/obra', obra)
             .then(function (response) {
                 //Ver que hago aca
                 console.log(response);
                 history.replace("/")
+                setLoading(false);
             })
             .catch(function (error) {
                 //ver que hacer en este caso
                 console.log(error);
-                alert("No se pudo guardar la obra, intente mas tarde");
-                //history.replace("/")
+                showError('No se pudo guardar el cliente, intentelo mas tarde')
+                setLoading(false);
             })
         }else{
-            alert("FALTAN LLENAR CAMPOS");
+            showError('FALTAN LLENAR CAMPOS')
         }
     }
 
@@ -54,13 +65,14 @@ const RegistrarObra = ({history}) => {
 
     return (
         <Card>
+            <Toast ref={toast} />
             <h3>Registrar una obra</h3>
             <ConstructionCard
                 updateObra = {(event, prop) => updateObra(event, prop)}
             />
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-danger" onClick={(event)=> handleCancel(event)}>Cancelar</button>
-                <button type="submit" class="btn btn-primary" onClick={(event)=>handleSubmit(event)}>Guardar</button>
+            <div className="d-flex justify-content-between">
+                <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
+                <Button type="submit" className="btn btn-primary" onClick={(event)=>handleSubmit(event)} icon="pi pi-check" label="Guardar" loading={loading}></Button>
             </div>
         </Card>
     )
