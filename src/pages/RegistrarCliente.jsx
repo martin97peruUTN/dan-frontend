@@ -4,7 +4,7 @@ import ConstructionCard from '../components/cards/ConstructionCard';
 import axios from 'axios';
 import {userService} from '../Url'
 
-const RegistrarCliente = () => {
+const RegistrarCliente = ({history}) => {
 
     const[obrasId, setObrasId]=useState(1)
 
@@ -65,11 +65,13 @@ const RegistrarCliente = () => {
                 .then(function (response) {
                     //Ver que hago aca
                     console.log(response);
+                    history.replace("/")
                 })
                 .catch(function (error) {
                     //ver que hacer en este caso
                     console.log(error);
                     alert("No se pudo guardar el cliente, intente mas tarde");
+                    history.replace("/")
                 })
             }else{
                 alert("FALTAN LLENAR CAMPOS");
@@ -91,7 +93,7 @@ const RegistrarCliente = () => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        alert("Terminar esto")
+        history.replace("/")
     }
 
     const ConstructionsList = newClient.obras.map((obra, index) => (

@@ -4,7 +4,7 @@ import Card from '../components/cards/Card'
 import axios from 'axios'
 import {productService} from '../Url'
 
-const RegistrarMaterial = () => {
+const RegistrarMaterial = ({history}) => {
 
     const[material, setMaterial] = useState({})
 
@@ -19,11 +19,13 @@ const RegistrarMaterial = () => {
             .then(function (response) {
                 //Ver que hago aca
                 console.log(response);
+                history.replace("/")
             })
             .catch(function (error) {
                 //ver que hacer en este caso
                 console.log(error);
                 alert("No se pudo guardar el material, intente mas tarde");
+                history.replace("/")
             })
         }else{
             alert("FALTAN LLENAR CAMPOS");
@@ -32,7 +34,7 @@ const RegistrarMaterial = () => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        alert("Terminar esto")
+        history.replace("/")
     }
 
     return (

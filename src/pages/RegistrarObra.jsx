@@ -4,7 +4,7 @@ import Card from '../components/cards/Card'
 import axios from 'axios'
 import {userService} from '../Url'
 
-const RegistrarObra = () => {
+const RegistrarObra = ({history}) => {
 
     const [obra, setObra] = useState({
         "tipo":{
@@ -34,11 +34,13 @@ const RegistrarObra = () => {
             .then(function (response) {
                 //Ver que hago aca
                 console.log(response);
+                history.replace("/")
             })
             .catch(function (error) {
                 //ver que hacer en este caso
                 console.log(error);
                 alert("No se pudo guardar la obra, intente mas tarde");
+                history.replace("/")
             })
         }else{
             alert("FALTAN LLENAR CAMPOS");
@@ -47,7 +49,7 @@ const RegistrarObra = () => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        alert("Terminar esto")
+        history.replace("/")
     }
 
     return (
