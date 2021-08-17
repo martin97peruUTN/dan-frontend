@@ -11,6 +11,7 @@ import Navbar from './components/Navbar'
 import PageNotFound from './pages/PageNotFound'
 import RegistrarCliente from './pages/RegistrarCliente'
 import ListadoClientes from './pages/ListadoClientes'
+import RegistrarObra from './pages/RegistrarObra'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           {/*Pongo el exact porque sino la / machea con el resto tambien*/}
           <Route path="/cliente-nuevo" component={RegistrarCliente} />
           <Route path="/cliente-listado" component={ListadoClientes} />
+          <Route path="/obra-nueva" component={RegistrarObra} />
           <Route component={PageNotFound} />
         </Switch>
       </div>

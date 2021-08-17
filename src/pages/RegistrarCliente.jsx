@@ -33,23 +33,22 @@ const RegistrarCliente = () => {
     //recibe el evento (de donde saca el value), el prop (que campo cambio) y el id
     //para encontrar esa obra en particular en el listado
     const updateObra = (event, prop, id) => {
-        //busco cual es el id de la obra a actualizar
         const obraIndex = newClient.obras.findIndex(obra => obra.id === id)
         const obrasCopy = [...newClient.obras]
-        //actualizo ese dato de esa obra con el valor del evento
         if(prop==="tipo"){
             obrasCopy[obraIndex]["tipo"] = {"descripcion": event.target.value};
         }else{
             obrasCopy[obraIndex][prop] = event.target.value;
         }
-        //"piso" el valor de la obra con lo mas nuevo
         setNewClient({...newClient,obras:obrasCopy})
     }
 
+    //Valido que ningun campo es vacio
     const validForm = () =>{
         let validObras = newClient.obras.every(obra => validObra(obra))
         return validObras && newClient.razonSocial && newClient.cuit && newClient.mail && newClient["user"]["user"] && newClient["user"]["password"];
     }
+
     const validObra = (obra) => {
         return obra.descripcion && obra.latitud && obra.longitud && obra.direccion && obra.superficie && obra.tipo.descripcion
     }
@@ -64,6 +63,7 @@ const RegistrarCliente = () => {
                 console.log("VALIDO");
                 axios.post(userService+'/cliente', newClient)
                 .then(function (response) {
+                    //Ver que hago aca
                     console.log(response);
                 })
                 .catch(function (error) {
