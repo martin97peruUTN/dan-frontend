@@ -71,7 +71,7 @@ const RegistrarCliente = ({history}) => {
                     //ver que hacer en este caso
                     console.log(error);
                     alert("No se pudo guardar el cliente, intente mas tarde");
-                    history.replace("/")
+                    //history.replace("/")
                 })
             }else{
                 alert("FALTAN LLENAR CAMPOS");
