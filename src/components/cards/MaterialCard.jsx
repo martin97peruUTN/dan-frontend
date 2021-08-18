@@ -35,7 +35,6 @@ const MaterialCard = (props) => {
                 <InputText id="unidad" className='w-full' onChange={(event) => props.updateMaterial(event, "unidad")} />
                 <label htmlFor="unidad">Unidad</label>
             </span>
-            {props.onDelete? <button className="btn btn-danger" onClick={props.onDelete}>Borrar obra</button> : null}
         </CardSecondary>
     )
 }

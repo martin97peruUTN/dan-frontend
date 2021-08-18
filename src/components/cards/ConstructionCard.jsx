@@ -36,7 +36,7 @@ const ConstructionCard = (props) => {
                 <InputText id="tipo" className='w-full' onChange={(event) => props.updateObra(event, "tipo")} />
                 <label htmlFor="tipo">Tipo de obra</label>
             </span>
-            <br/>
+            {props.onDelete?<br/>:null}
             {props.onDelete? <Button className="p-button-danger" onClick={props.onDelete}>Borrar obra</Button> : null}
         </CardSecondary>
     )
