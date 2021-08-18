@@ -8,6 +8,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Divider } from 'primereact/divider';
+import { InputMask } from 'primereact/inputmask';
 
 const RegistrarCliente = ({history}) => {
 
@@ -137,7 +138,7 @@ const RegistrarCliente = ({history}) => {
                 </span>
                 <br/>
                 <span className="p-float-label">
-                    <InputText id="cuit" className='w-full' keyfilter="int" onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})} />
+                    <InputMask id="cuit" className='w-full' mask="99-99999999-9" value={newClient.cuit} onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})} />
                     <label htmlFor="cuit">CUIT</label>
                 </span>
                 <br/>
