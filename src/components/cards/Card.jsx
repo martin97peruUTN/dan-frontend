@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card as CardPrime } from 'primereact/card';
 
 const Card = (props) => {
     //secondary en un bool que indica si la card es secundaria o no
@@ -6,11 +7,9 @@ const Card = (props) => {
     //obtengo el gris del archivo css
     const grey = getComputedStyle(document.documentElement).getPropertyValue('--grey');
     return (
-        <div className="card mb-3" style={{backgroundColor: secondary ? grey : 'white'}}>
-            <div className="card-body">
-                {props.children}
-            </div>
-        </div>
+        <CardPrime className="mb-3" style={{backgroundColor: secondary ? grey : 'white'}}>
+            {props.children}
+        </CardPrime>
     )
 }
 

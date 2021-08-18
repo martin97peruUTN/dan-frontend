@@ -5,6 +5,8 @@ import axios from 'axios';
 import {userService} from '../Url'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
 
 const RegistrarCliente = ({history}) => {
 
@@ -75,7 +77,7 @@ const RegistrarCliente = ({history}) => {
                 .then(function (response) {
                     //Ver que hago aca
                     console.log(response);
-                    history.replace("/")
+                    history.push("/")
                     setLoading(false);
                 })
                 .catch(function (error) {
@@ -103,7 +105,7 @@ const RegistrarCliente = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.replace("/")
+        history.push("/")
     }
 
     const ConstructionsList = newClient.obras.map((obra, index) => (
@@ -115,45 +117,35 @@ const RegistrarCliente = ({history}) => {
     ))
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <Card>
                 <Toast ref={toast} />
                 <h3>Datos del usuario</h3>
-                <label className="form-label">Usuario</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Usuario"
-                    onChange={(event) => setTipoUsuario("user", event.target.value)}
-                />
-                <label className="form-label">Contraseña</label>
-                <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Contraseña"
-                    onChange={(event) => setTipoUsuario("password", event.target.value)}
-                />
-                <label className="form-label">Razon social</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Razon social"
-                    onChange={(event) => setNewClient({...newClient, "razonSocial": event.target.value})}
-                />
-                <label className="form-label">CUIT</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="CUIT"
-                    onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})}
-                />
-                <label className="form-label">Mail</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Mail"
-                    onChange={(event) => setNewClient({...newClient, "mail": event.target.value})}
-                />
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="user" className='w-full' onChange={(event) => setTipoUsuario("user", event.target.value)} />
+                    <label htmlFor="user">Usuario</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <Password id="password" className='w-full' inputClassName='w-full' feedback={false} toggleMask onChange={(event) => setTipoUsuario("password", event.target.value)} />
+                    <label htmlFor="password">Contraseña</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="razonSocial" className='w-full' onChange={(event) => setNewClient({...newClient, "razonSocial": event.target.value})} />
+                    <label htmlFor="razonSocial">Razon social</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="cuit" className='w-full' onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})} />
+                    <label htmlFor="cuit">CUIT</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="mail" className='w-full' onChange={(event) => setNewClient({...newClient, "mail": event.target.value})} />
+                    <label htmlFor="mail">Mail</label>
+                </span>
             </Card>
             <Card>
                 <h3>Obras</h3>
@@ -164,10 +156,10 @@ const RegistrarCliente = ({history}) => {
                 <hr/>
                 <div className="d-flex justify-content-between">
                     <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
-                    <Button type="submit" className="btn btn-primary" icon="pi pi-check" label="Guardar" loading={loading}></Button>
+                    <Button type="submit" className="btn btn-primary" icon="pi pi-check" onClick={(event)=> handleSubmit(event)} label="Guardar" loading={loading}></Button>
                 </div>
             </Card>
-        </form>
+        </div>
     )
 }
 

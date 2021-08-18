@@ -29,7 +29,7 @@ const RegistrarMaterial = ({history}) => {
             .then(function (response) {
                 //Ver que hago aca
                 console.log(response);
-                history.replace("/")
+                history.push("/")
                 setLoading(false);
             })
             .catch(function (error) {
@@ -45,7 +45,7 @@ const RegistrarMaterial = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.replace("/")
+        history.push("/")
     }
 
     return (
