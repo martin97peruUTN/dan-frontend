@@ -6,7 +6,9 @@ import { InputText } from 'primereact/inputtext';
 const ConstructionCard = (props) => {
 
     return (
-        <CardSecondary>
+        <CardSecondary footer = {
+            props.onDelete?<Button className="p-button-danger" onClick={props.onDelete}>Borrar obra</Button>:null
+        }>
             <span className="p-float-label">
                 <InputText id="descripcion" className='w-full' onChange={(event) => props.updateObra(event, "descripcion")} />
                 <label htmlFor="descripcion">Descripcion</label>
@@ -36,8 +38,6 @@ const ConstructionCard = (props) => {
                 <InputText id="tipo" className='w-full' onChange={(event) => props.updateObra(event, "tipo")} />
                 <label htmlFor="tipo">Tipo de obra</label>
             </span>
-            {props.onDelete?<br/>:null}
-            {props.onDelete? <Button className="p-button-danger" onClick={props.onDelete}>Borrar obra</Button> : null}
         </CardSecondary>
     )
 }

@@ -64,16 +64,17 @@ const RegistrarObra = ({history}) => {
     }
 
     return (
-        <Card>
-            <Toast ref={toast} />
-            <h3>Registrar una obra</h3>
-            <ConstructionCard
-                updateObra = {(event, prop) => updateObra(event, prop)}
-            />
+        <Card title="Registrar una obra"
+        footer = {
             <div className="d-flex justify-content-between">
                 <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
                 <Button type="submit" className="btn btn-primary" onClick={(event)=>handleSubmit(event)} icon="pi pi-check" label="Guardar" loading={loading}></Button>
             </div>
+        }>
+            <Toast ref={toast} />
+            <ConstructionCard
+                updateObra = {(event, prop) => updateObra(event, prop)}
+            />
         </Card>
     )
 }

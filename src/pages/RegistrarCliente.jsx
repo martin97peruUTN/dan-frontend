@@ -7,6 +7,7 @@ import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
+import { Divider } from 'primereact/divider';
 
 const RegistrarCliente = ({history}) => {
 
@@ -118,10 +119,8 @@ const RegistrarCliente = ({history}) => {
 
     return (
         <div>
-            <Card>
+            <Card title='Datos del usuario'>
                 <Toast ref={toast} />
-                <h3>Datos del usuario</h3>
-                <br/>
                 <span className="p-float-label">
                     <InputText id="user" className='w-full' onChange={(event) => setTipoUsuario("user", event.target.value)} />
                     <label htmlFor="user">Usuario</label>
@@ -147,17 +146,18 @@ const RegistrarCliente = ({history}) => {
                     <label htmlFor="mail">Mail</label>
                 </span>
             </Card>
-            <Card>
-                <h3>Obras</h3>
-                {ConstructionsList}
-                <div className="">
+            <Card title='Obras'
+                footer={
+                <div>
                     <Button className="btn btn-primary" onClick={(event)=>handleAddConstruction(event)}>Agregar obra</Button>
+                    <Divider/>
+                    <div className="flex justify-content-between">
+                        <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
+                        <Button type="submit" className="btn btn-primary" icon="pi pi-check" onClick={(event)=> handleSubmit(event)} label="Guardar" loading={loading}></Button>
+                    </div>
                 </div>
-                <hr/>
-                <div className="d-flex justify-content-between">
-                    <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
-                    <Button type="submit" className="btn btn-primary" icon="pi pi-check" onClick={(event)=> handleSubmit(event)} label="Guardar" loading={loading}></Button>
-                </div>
+                }>
+                {ConstructionsList}
             </Card>
         </div>
     )
