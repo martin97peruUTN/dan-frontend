@@ -137,12 +137,12 @@ const RegistrarCliente = ({history}) => {
                 </span>
                 <br/>
                 <span className="p-float-label">
-                    <InputText id="cuit" className='w-full' onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})} />
+                    <InputText id="cuit" className='w-full' keyfilter="int" onChange={(event) => setNewClient({...newClient, "cuit": event.target.value})} />
                     <label htmlFor="cuit">CUIT</label>
                 </span>
                 <br/>
                 <span className="p-float-label">
-                    <InputText id="mail" className='w-full' onChange={(event) => setNewClient({...newClient, "mail": event.target.value})} />
+                    <InputText id="mail" className='w-full' keyfilter="email" onChange={(event) => setNewClient({...newClient, "mail": event.target.value})} />
                     <label htmlFor="mail">Mail</label>
                 </span>
             </Card>

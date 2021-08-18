@@ -15,12 +15,12 @@ const ConstructionCard = (props) => {
             </span>
             <br/>
             <span className="p-float-label">
-                <InputText id="latitud" className='w-full' onChange={(event) => props.updateObra(event, "latitud")} />
+                <InputText id="latitud" className='w-full' keyfilter="num" onChange={(event) => props.updateObra(event, "latitud")} />
                 <label htmlFor="latitud">Latitud</label>
             </span>
             <br/>
             <span className="p-float-label">
-                <InputText id="longitud" className='w-full' onChange={(event) => props.updateObra(event, "longitud")} />
+                <InputText id="longitud" className='w-full' keyfilter="num" onChange={(event) => props.updateObra(event, "longitud")} />
                 <label htmlFor="longitud">Longitud</label>
             </span>
             <br/>
@@ -30,7 +30,7 @@ const ConstructionCard = (props) => {
             </span>
             <br/>
             <span className="p-float-label">
-                <InputText id="superficie" className='w-full' onChange={(event) => props.updateObra(event, "superficie")} />
+                <InputText id="superficie" className='w-full' keyfilter="num" onChange={(event) => props.updateObra(event, "superficie")} />
                 <label htmlFor="superficie">Superficie</label>
             </span>
             <br/>
