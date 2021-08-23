@@ -68,14 +68,18 @@ const RegistrarCliente = ({history}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(newClient);
         if(newClient.obras.length===0){
-            alert("Debe tener al menos una obra");
+            showError("Debe tener al menos una obra");
         }else{
             if(validForm()){
                 setLoading(true);
                 console.log("VALIDO");
-                axios.post(userService+'/cliente', newClient)
+                //creo una copia de las obras y les seteo el id en null, despues creo una copia
+                //del cliente y se lo asigno
+                const obras = newClient.obras.map(item => ({...item}))
+                obras.map(item => item.id = null)
+                const postClient = {...newClient, obras}
+                axios.post(userService+'/cliente', postClient)
                 .then(function (response) {
                     //Ver que hago aca
                     console.log(response);
