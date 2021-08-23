@@ -14,6 +14,10 @@ const RegistrarObra = ({history}) => {
     const [obra, setObra] = useState({
         "tipo":{
             "descripcion":""
+        },
+        //TODO poner el cliente que corresponde
+        "cliente":{
+            "id":1
         }
     })
 
@@ -38,6 +42,7 @@ const RegistrarObra = ({history}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(obra)
         if(validObra()){
             setLoading(true);
             axios.post(userService+'/obra', obra)
