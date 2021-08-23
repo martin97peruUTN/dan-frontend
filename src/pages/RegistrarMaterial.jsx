@@ -11,7 +11,11 @@ const RegistrarMaterial = ({history}) => {
     const[loading, setLoading] = useState(false)
     const toast = useRef(null);
 
-    const[material, setMaterial] = useState({})
+    const[material, setMaterial] = useState({
+        'unidad':{
+            'descripcion':''
+        }
+    })
 
     const showToast = (summary, message, severity) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
@@ -21,8 +25,15 @@ const RegistrarMaterial = ({history}) => {
         return material.nombre && material.descripcion && material.precio && material.stockActual && material.stockMinimo && material.unidad
     }
 
+    const saveUnidad = (value) => {
+        let unidad = {...material.unidad}
+        unidad.descripcion = value
+        setMaterial({...material, unidad})
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(material)
         if(validMaterial()){
             setLoading(true);
             axios.post(productService+'/material', material)
@@ -59,7 +70,7 @@ const RegistrarMaterial = ({history}) => {
         }>
             <Toast ref={toast} />
             <MaterialCard
-                updateMaterial = {(event, prop) => setMaterial({...material, [prop]:event.target.value})}
+                updateMaterial = {(event, prop) => prop==="unidad"?saveUnidad(event.target.value):setMaterial({...material, [prop]:event.target.value})}
             />
             
         </Card>
