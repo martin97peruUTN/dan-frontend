@@ -31,8 +31,8 @@ const RegistrarCliente = ({history}) => {
         }]
     });
 
-    const showError = (message) => {
-        toast.current.show({severity:'error', summary: 'Error', detail:message, life: 3000});
+    const showToast = (summary, message, severity) => {
+        toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
 
     //funcion auxiliar para actualizar el user dentro de newClient
@@ -69,7 +69,7 @@ const RegistrarCliente = ({history}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(newClient.obras.length===0){
-            showError("Debe tener al menos una obra");
+            showToast('Error','Debe tener al menos una obra','warn')
         }else{
             if(validForm()){
                 setLoading(true);
@@ -83,16 +83,17 @@ const RegistrarCliente = ({history}) => {
                 .then(function (response) {
                     //Ver que hago aca
                     console.log(response);
-                    history.push("/")
                     setLoading(false);
+                    showToast('Exito!','Cliente creado correctamente','success')
+                    history.push("/")
                 })
                 .catch(function (error) {
                     console.log(error);
-                    showError('No se pudo guardar el cliente, intentelo mas tarde')
+                    showToast('Error','No se pudo guardar el cliente, intentelo mas tarde','error')
                     setLoading(false);
                 })
             }else{
-                showError('FALTAN LLENAR CAMPOS')
+                showToast('Error','FALTAN LLENAR CAMPOS','warn')
             }
         }
     }

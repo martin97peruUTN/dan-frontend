@@ -13,8 +13,8 @@ const RegistrarMaterial = ({history}) => {
 
     const[material, setMaterial] = useState({})
 
-    const showError = (message) => {
-        toast.current.show({severity:'error', summary: 'Error', detail:message, life: 3000});
+    const showToast = (summary, message, severity) => {
+        toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
 
     const validMaterial = () => {
@@ -29,17 +29,18 @@ const RegistrarMaterial = ({history}) => {
             .then(function (response) {
                 //Ver que hago aca
                 console.log(response);
-                history.push("/")
                 setLoading(false);
+                showToast('Exito!','Cliente creado correctamente','success')
+                history.push("/")
             })
             .catch(function (error) {
                 //ver que hacer en este caso
                 console.log(error);
-                showError('No se pudo guardar el cliente, intentelo mas tarde')
+                showToast('Error','No se pudo guardar el cliente, intentelo mas tarde','error')
                 setLoading(false);
             })
         }else{
-            showError('FALTAN LLENAR CAMPOS')
+            showToast('Error','FALTAN LLENAR CAMPOS','warn')
         }
     }
 
