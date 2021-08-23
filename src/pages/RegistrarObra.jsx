@@ -51,7 +51,7 @@ const RegistrarObra = ({history}) => {
             .catch(function (error) {
                 //ver que hacer en este caso
                 console.log(error);
-                showToast('Error','No se pudo guardar el cliente, intentelo mas tarde','error')
+                showToast('Error','No se pudo guardar la obra, intentelo mas tarde','error')
                 setLoading(false);
             })
         }else{
