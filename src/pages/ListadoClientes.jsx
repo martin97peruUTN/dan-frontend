@@ -1,30 +1,36 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {urlBase} from '../Url'
-import Card from '../components/cards/Card'
+import ClientListCard from '../components/cards/ClientListCard'
+import {userService} from '../Url'
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const ListadoClientes = () => {
 
+    const[loading, setLoading] = useState(true)
     const [clientes, setClientes] = useState([])
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+        axios.get(userService+'/cliente').then((res) => {
             setClientes(res.data);
         });
+        setLoading(false)
     }, [])
 
     const cardsMarkup = clientes.map((cliente,index) => (
-        <Card
+        <ClientListCard
             key={cliente.id}
-            phone={cliente.phone}
-            name={cliente.name}
-            //avatar={cliente.avatar}
-            //onDelete={() => deleteclienteHandler(index)}
-            //onChangeName={(event) => changeNameHandler(event, cliente.id)}
+            razonSocial={cliente.razonSocial}
+            cuit={cliente.cuit}
+            mail={cliente.mail}
         />
     ))
 
     return (
+        loading?
+        <div style={{"display": "flex"}}>
+            <ProgressSpinner/>
+        </div>
+        :
         <div>
             {cardsMarkup}
         </div>

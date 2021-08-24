@@ -4,7 +4,7 @@ import Card from './Card'
 
 const CardTwoColumns = (props) => {
     return (
-        <Card>
+        <Card title={props.title} footer={props.footer} className="mb-3">
             <div className="row">
                 <div className="col-md-10">
                     {props.leftSide}
