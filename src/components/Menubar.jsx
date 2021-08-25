@@ -55,12 +55,12 @@ const Menubar = () => {
                 {
                     label: 'Nuevo',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/cliente-nuevo'
+                    url: '/pedido-nuevo'
                 },
                 {
                     label: 'Listado',
                     icon: 'pi pi-fw pi-list',
-                    url: '/cliente-listado'
+                    url: '/pedido-listado'
                 }
             ]
         },
@@ -71,12 +71,12 @@ const Menubar = () => {
                 {
                     label: 'Registrar',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/cliente-nuevo'
+                    url: '/pago-nuevo'
                 },
                 {
                     label: 'Listado',
                     icon: 'pi pi-fw pi-list',
-                    url: '/cliente-listado'
+                    url: '/pago-listado'
                 }
             ]
         },

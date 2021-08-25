@@ -14,6 +14,7 @@ import RegistrarCliente from './pages/RegistrarCliente'
 import ListadoClientes from './pages/ListadoClientes'
 import RegistrarObra from './pages/RegistrarObra'
 import RegistrarMaterial from './pages/RegistrarMaterial'
+import RegistrarPedido from './pages/RegistrarPedido'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/cliente-listado" component={ListadoClientes} />
             <Route path="/obra-nueva" component={RegistrarObra} />
             <Route path="/producto-nuevo" component={RegistrarMaterial} />
+            <Route path="/pedido-nuevo" component={RegistrarPedido} />
             {/*Por defecto*/}
             <Route component={PageNotFound} />
           </Switch>
