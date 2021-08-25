@@ -8,6 +8,7 @@ import 'primeicons/primeicons.css';
 import PrimeReact from 'primereact/api';
 
 import Navbar from './components/Navbar'
+import Menubar from './components/Menubar'
 import PageNotFound from './pages/PageNotFound'
 import RegistrarCliente from './pages/RegistrarCliente'
 import ListadoClientes from './pages/ListadoClientes'
@@ -21,7 +22,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar className="navbar"/>
+        <Menubar className=""/>
         <div className="mx-1 my-3 sm:mx-6">
           <Switch>
             <Route exact path="/" component={PageNotFound} />
@@ -30,6 +31,7 @@ function App() {
             <Route path="/cliente-listado" component={ListadoClientes} />
             <Route path="/obra-nueva" component={RegistrarObra} />
             <Route path="/producto-nuevo" component={RegistrarMaterial} />
+            {/*Por defecto*/}
             <Route component={PageNotFound} />
           </Switch>
         </div>

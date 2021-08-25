@@ -44,6 +44,26 @@ body {
     background-color: var(--light) !important;
 }
 
+/*Menubar*/
+.p-menubar {
+    background-color: var(--primary) !important;
+}
+.p-menu-list {
+    background: var(--primary) !important;
+}
+.p-submenu-list {
+    background: var(--primary) !important;
+}
+.p-menuitem {
+    background-color: var(--primary) !important;
+}
+.p-menuitem:active {
+    background-color: var(--dark) !important;
+}
+.p-menuitem-text, .p-menuitem-icon, .p-submenu-icon {
+    color: var(--text-primary) !important;
+}
+
 /*Card*/
 
 /*Buttons*/
