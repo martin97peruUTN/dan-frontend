@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
 import Card from '../components/cards/Card';
-import CardSecondary from '../components/cards/CardSecondary';
 import { AutoComplete } from 'primereact/autocomplete';
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
@@ -16,10 +15,13 @@ const RegistrarPedido = ({history}) => {
     const[loadingStart, setLoadingStart] = useState(true)
     const[loadingSubmit, setLoadingSubmit] = useState(false)
     const toast = useRef(null);
-    const [date, setDate] = useState()
-    const [obras, setObras] = useState()
+    const [allClientes, setAllClientes] = useState([])
+    const [filteredClientes, setFilteredClientes] = useState([])
+    const [selectedCliente, setSelectedCliente] = useState()
+    const [filteredObras, setFilteredObras] = useState([])
     const [selectedObra, setSelectedObra] = useState()
-    const[detailsId, setDetailsId]=useState(1)
+    const [date, setDate] = useState()
+    const [detailsId, setDetailsId]=useState(1)
     const [details, setDetails] = useState([
         {
             "id": detailsId-1
@@ -31,17 +33,17 @@ const RegistrarPedido = ({history}) => {
     }
 
     useEffect(() => {
-        axios.get(userService+'/obra').then((res) => {
-            setObras(res.data);
+        setLoadingStart(true)
+        axios.get(userService+'/cliente').then((res) => {
+            setAllClientes(res.data);
             setLoadingStart(false)
         })
-        /*.catch(function (error) {
-            showToast('Error','No se pudieron cargar las obras, intentelo mas tarde','error')
+        .catch(function (error) {
+            showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
             setTimeout(() => {
                 history.push("/")
             }, 3000);
-        })*/
-        setLoadingStart(false)//sacar este
+        })
     }, [])
 
     const updateDetail = (event, prop, id) => {
@@ -78,21 +80,54 @@ const RegistrarPedido = ({history}) => {
         return detail.producto && detail.cantidad && detail.precio
     }
 
+    const searchClientes = (event) => {
+        let _filteredClientes;
+        if(!event.query.trim().length){
+            _filteredClientes = [...allClientes];
+        }else{
+            _filteredClientes = allClientes.filter((cliente) => {
+                return cliente.razonSocial.startsWith(event.query)
+            })
+        }
+        setFilteredClientes(_filteredClientes);
+    }
+
+    const searchObras = (event) => {
+        let _filteredObras;
+        if(!event.query.trim().length){
+            if(selectedCliente){
+                _filteredObras = [...selectedCliente.obras];
+            }else{
+                showToast('Error','Seleccione un cliente primero','warn')
+            }
+        }else{//hago este try/catch porque si escribe cualquier cosa en el cliente y despues escribe en este se descajeta
+            try {
+                _filteredObras = [...selectedCliente.obras].filter((obra) => {
+                    return obra.direccion.startsWith(event.query)
+                })
+            }catch(err){
+                showToast('Error','Seleccione un cliente primero','warn')
+            }
+        }
+        setFilteredObras(_filteredObras)
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(date)
         if(details.length===0){
             showToast('Error','Debe tener al menos un detalle','warn')
         }else{
             if(validForm()){
                 setLoadingSubmit(true);
+                const detallesSinId = details.map(item => ({...item}))
+                detallesSinId.map(item => item.id = null)
                 const data = {
-                    "fechaPedido": date,
+                    //"fechaPedido": date,
                     "obra": selectedObra,
-                    "detalle": details,
-                    "estado":{
-                        "estado":"ESTADO" //esto ni idea
-                    }
+                    "detalle": detallesSinId
                 }
+                console.log(data)
                 axios.post(orderService+'/pedido', data)
                 .then(function (response) {
                     //Ver que hago aca
@@ -130,8 +165,16 @@ const RegistrarPedido = ({history}) => {
         <div>
             <Toast ref={toast} />
             <p className="text-3xl font-bold text-800">Registrar pedido</p>
-            <Card title="Obra">
-                
+            <Card title="Obra destino">
+                <span className="p-float-label">
+                    <AutoComplete id="clienteAutocomplete" className='w-full' value={selectedCliente} suggestions={filteredClientes} completeMethod={searchClientes} field="razonSocial" dropdown forceSelection onChange={(e)=>setSelectedCliente(e.value)} />
+                    <label htmlFor="clienteAutocomplete">Razon social del cliente</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <AutoComplete id="obraAutocomplete" className='w-full' value={selectedObra} suggestions={filteredObras} completeMethod={searchObras} field="direccion" dropdown forceSelection onChange={(e) => setSelectedObra(e.value)} />
+                    <label htmlFor="obraAutocomplete">Direccion de la obra</label>
+                </span>
             </Card>
             <Card title="Fecha de envio">
                 <Calendar value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
