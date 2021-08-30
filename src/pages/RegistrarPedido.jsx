@@ -5,7 +5,7 @@ import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button'
 import axios from 'axios'
-import {userService, orderService} from '../Url'
+import {userService, orderService, productService} from '../Url'
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 import DetailCard from '../components/cards/DetailCard';
@@ -20,6 +20,7 @@ const RegistrarPedido = ({history}) => {
     const [selectedCliente, setSelectedCliente] = useState()
     const [filteredObras, setFilteredObras] = useState([])
     const [selectedObra, setSelectedObra] = useState()
+    const [allProductos, setAllProductos] = useState()
     const [date, setDate] = useState()
     const [detailsId, setDetailsId]=useState(1)
     const [details, setDetails] = useState([
@@ -40,6 +41,16 @@ const RegistrarPedido = ({history}) => {
         })
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
+            setTimeout(() => {
+                history.push("/")
+            }, 3000);
+        })
+        axios.get(productService+'/material').then((res) => {
+            setAllProductos(res.data);
+            setLoadingStart(false)
+        })
+        .catch(function (error) {
+            showToast('Error','No se pudieron cargar los productos, intentelo mas tarde','error')
             setTimeout(() => {
                 history.push("/")
             }, 3000);
@@ -152,6 +163,7 @@ const RegistrarPedido = ({history}) => {
             key={detail.id}
             onDelete = {() => handleDeleteDetail(index)}
             updateDetail = {(event, prop) => updateDetail(event, prop, detail.id)}
+            allProductos = {allProductos}
         />
     ))
 
@@ -177,7 +189,7 @@ const RegistrarPedido = ({history}) => {
                 </span>
             </Card>
             <Card title="Fecha de envio">
-                <Calendar value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
+                <Calendar className='w-full' value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
             </Card>
             <Card title="Detalle"
             footer={
