@@ -64,7 +64,8 @@ const RegistrarPago = (props) => {
                 setMedioPagoCard(<CardSecondary title="Seleccione un medio de pago"></CardSecondary>)
                 break;
         }
-    }, [medioDePago])//tengo que ponerlo asi y no medioDePago.type porque los campos internos andan mal sino
+    }, [medioDePago])
+    //tengo que ponerlo asi y no medioDePago.type porque los campos internos andan mal sino, no se que onda
 
     const updateMedioPago = (event, prop) => {
         const medioPagoCopy = {...medioDePago}
@@ -90,16 +91,16 @@ const RegistrarPago = (props) => {
     }
 
     const validPago = () => {
-        let boolean = medioDePago.cliente && medioDePago.type
+        let boolean = selectedCliente && medioDePago.type && medioDePago.observacion
         switch (medioDePago.type) {
             case "efectivo":
-                
+                boolean = boolean && medioDePago.nroRecibo
                 break;
             case "transferencia":
-                
+                boolean = boolean && medioDePago.cbuOrigen && medioDePago.cbuDestino && medioDePago.codigoTransferencia
                 break;
             case "cheque":
-                
+                boolean = boolean && medioDePago.nroCheque && medioDePago.fechaCobro && medioDePago.banco
                 break;
             default:
                 showToast('Error','Seleccione un medio de pago','warn')
@@ -134,11 +135,6 @@ const RegistrarPago = (props) => {
         }else{
             showToast('Error','FALTAN LLENAR CAMPOS','warn')
         }
-    }
-
-    const updateMedioPagoType = (e) => {
-        setMedioDePago({})
-        setMedioDePago({...medioDePago, "type": e.value})
     }
 
     return (
