@@ -12,6 +12,7 @@ import CardSecondary from '../components/cards/CardSecondary';
 import EfectivoCard from '../components/cards/mediosDePago/EfectivoCard'
 import ChequeCard from '../components/cards/mediosDePago/ChequeCard'
 import TransferenciaCard from '../components/cards/mediosDePago/TransferenciaCard'
+import {currentAccountService} from '../Url'
 
 const RegistrarPago = (props) => {
 
@@ -21,11 +22,10 @@ const RegistrarPago = (props) => {
     const [allClientes, setAllClientes] = useState([])
     const [filteredClientes, setFilteredClientes] = useState([])
     const [selectedCliente, setSelectedCliente] = useState()
-    const [medioPago, setMedioPago] = useState()
-    const [pago, setPago] = useState({})
-    const [medioPagoCard, setMedioPagoCard] = useState(<CardSecondary title="Seleccione un medio de pago"></CardSecondary>)
+    const [medioDePago, setMedioDePago] = useState({})
+    const [medioPagoCard, setMedioPagoCard] = useState()
 
-    const mediosDePago = [
+    const allMediosDePago = [
         {label: 'Efectivo', value: 'efectivo'},
         {label: 'Transferencia', value: 'transferencia'},
         {label: 'Cheque', value: 'cheque'}
@@ -49,6 +49,29 @@ const RegistrarPago = (props) => {
         })
     }, [])
 
+    useEffect(() => {
+        switch (medioDePago.type) {
+            case "efectivo":
+                setMedioPagoCard(<EfectivoCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                break;
+            case "transferencia":
+                setMedioPagoCard(<TransferenciaCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                break;
+            case "cheque":
+                setMedioPagoCard(<ChequeCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                break;
+            default:
+                setMedioPagoCard(<CardSecondary title="Seleccione un medio de pago"></CardSecondary>)
+                break;
+        }
+    }, [medioDePago])//tengo que ponerlo asi y no medioDePago.type porque los campos internos andan mal sino
+
+    const updateMedioPago = (event, prop) => {
+        const medioPagoCopy = {...medioDePago}
+        medioPagoCopy[prop] = event.target.value;
+        setMedioDePago(medioPagoCopy)
+    }
+
     const searchClientes = (event) => {
         let _filteredClientes;
         if(!event.query.trim().length){
@@ -66,27 +89,56 @@ const RegistrarPago = (props) => {
         props.history.push("/")
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-    }
-
-    const onChangeMedioPago = (e) => {
-        setMedioPago(e.value)
-        switch (e.value) {
+    const validPago = () => {
+        let boolean = medioDePago.cliente && medioDePago.type
+        switch (medioDePago.type) {
             case "efectivo":
-                setMedioPagoCard(<EfectivoCard/>)
+                
                 break;
             case "transferencia":
-                setMedioPagoCard(<TransferenciaCard/>)
+                
                 break;
             case "cheque":
-                setMedioPagoCard(<ChequeCard/>)
+                
                 break;
             default:
-                setMedioPagoCard(<h1>aca no deberia llegar</h1>)
+                showToast('Error','Seleccione un medio de pago','warn')
+                boolean = false
                 break;
         }
+        return boolean
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = {
+            "cliente":selectedCliente,
+            "medio":medioDePago
+        }
+        console.log(data)
+        if(validPago()){
+            /*setLoadingSubmit(true);
+            axios.post(currentAccountService+'/pago', data)
+            .then(function (response) {
+                //Ver que hago aca
+                console.log(response);
+                setLoadingSubmit(false);
+                showToast('Exito!','Pago creado correctamente','success')
+                props.history.push("/")
+            })
+            .catch(function (error) {
+                console.log(error);
+                showToast('Error','No se pudo guardar el pago, intentelo mas tarde','error')
+                setLoadingSubmit(false);
+            })*/
+        }else{
+            showToast('Error','FALTAN LLENAR CAMPOS','warn')
+        }
+    }
+
+    const updateMedioPagoType = (e) => {
+        setMedioDePago({})
+        setMedioDePago({...medioDePago, "type": e.value})
     }
 
     return (
@@ -115,7 +167,7 @@ const RegistrarPago = (props) => {
                 </span>
                 <br/>
                 <span className="p-float-label">
-                    <Dropdown id="medioPagoDropdown" className='w-full' value={medioPago} options={mediosDePago} onChange={e=>onChangeMedioPago(e)} />
+                    <Dropdown id="medioPagoDropdown" className='w-full' value={medioDePago.type} options={allMediosDePago} onChange={e=>setMedioDePago({"type": e.value})} />
                     <label htmlFor="medioPagoDropdown">Medio de pago</label>
                 </span>
                 <br/>
