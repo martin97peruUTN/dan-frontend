@@ -58,7 +58,7 @@ const RegistrarPago = (props) => {
                 setMedioPagoCard(<TransferenciaCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
                 break;
             case "cheque":
-                setMedioPagoCard(<ChequeCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                setMedioPagoCard(<ChequeCard calendarValue={medioDePago.fechaCobro} updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
                 break;
             default:
                 setMedioPagoCard(<CardSecondary title="Seleccione un medio de pago"></CardSecondary>)
@@ -116,9 +116,9 @@ const RegistrarPago = (props) => {
             "cliente":selectedCliente,
             "medio":medioDePago
         }
-        console.log(data)
+        //console.log(data)
         if(validPago()){
-            /*setLoadingSubmit(true);
+            setLoadingSubmit(true);
             axios.post(currentAccountService+'/pago', data)
             .then(function (response) {
                 //Ver que hago aca
@@ -131,7 +131,7 @@ const RegistrarPago = (props) => {
                 console.log(error);
                 showToast('Error','No se pudo guardar el pago, intentelo mas tarde','error')
                 setLoadingSubmit(false);
-            })*/
+            })
         }else{
             showToast('Error','FALTAN LLENAR CAMPOS','warn')
         }

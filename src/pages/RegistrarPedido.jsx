@@ -134,7 +134,7 @@ const RegistrarPedido = ({history}) => {
                 const detallesSinId = details.map(item => ({...item}))
                 detallesSinId.map(item => item.id = null)
                 const data = {
-                    //"fechaPedido": date,
+                    "fechaPedido": date,
                     "obra": selectedObra,
                     "detalle": detallesSinId
                 }

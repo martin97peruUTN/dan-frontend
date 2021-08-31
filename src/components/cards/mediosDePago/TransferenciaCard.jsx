@@ -2,10 +2,28 @@ import React from 'react'
 import CardSecondary from '../CardSecondary'
 import { InputText } from 'primereact/inputtext';
 
-const TransferenciaCard = () => {
+const TransferenciaCard = (props) => {
     return (
         <CardSecondary title={"Transferencia"}>
-
+            <span className="p-float-label">
+                <InputText id="observacion" className='w-full' keyfilter="num" onChange={(event) => props.updateMedioPago(event, "observacion")} />
+                <label htmlFor="observacion">Observacion (monto)</label>
+            </span>
+            <br/>
+            <span className="p-float-label">
+                <InputText id="cbuOrigen" className='w-full' keyfilter="num" onChange={(event) => props.updateMedioPago(event, "cbuOrigen")} />
+                <label htmlFor="cbuOrigen">CBU origen</label>
+            </span>
+            <br/>
+            <span className="p-float-label">
+                <InputText id="cbuDestino" className='w-full' keyfilter="num" onChange={(event) => props.updateMedioPago(event, "cbuDestino")} />
+                <label htmlFor="cbuDestino">CBU destino</label>
+            </span>
+            <br/>
+            <span className="p-float-label">
+                <InputText id="codigoTransferencia" className='w-full' keyfilter="num" onChange={(event) => props.updateMedioPago(event, "codigoTransferencia")} />
+                <label htmlFor="codigoTransferencia">Codigo de la transferencia</label>
+            </span>
         </CardSecondary>
     )
 }
