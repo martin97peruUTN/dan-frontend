@@ -10,7 +10,11 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 import DetailCard from '../components/cards/DetailCard';
 
+import {useParams} from "react-router-dom"
+
 const RegistrarPedido = ({history}) => {
+
+    const {pedidoId} = useParams()
 
     const[loadingStart, setLoadingStart] = useState(true)
     const[loadingSubmit, setLoadingSubmit] = useState(false)
@@ -33,11 +37,49 @@ const RegistrarPedido = ({history}) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
 
+    const setClienteYObra = (id) => {
+        for(let i=0; i<allClientes.length; i++) {
+            for(let j=0; j<allClientes[i].obras.length; j++) {
+                console.log('cliente sub '+i+':'+allClientes[i])
+                console.log('obra sub '+j+':'+allClientes[i].obras[j])
+                if(allClientes[i].obras[j].id === id) {
+                    console.log(allClientes[i])
+                    setSelectedCliente(allClientes[i])
+                    setSelectedObra(allClientes[i].obras[j])
+                    return null
+                }
+            }
+        }
+        console.log('NADA')
+    }
+
     useEffect(() => {
         setLoadingStart(true)
+        //va a venir el id del pedido cuando se quiera editar
         axios.get(userService+'/cliente').then((res) => {
             setAllClientes(res.data);
             setLoadingStart(false)
+        }).then(() => {
+            if(pedidoId){
+                console.log('pedido con id: '+pedidoId)
+                axios.get(orderService+'/pedido/'+pedidoId).then((res) => {
+                    console.log(res.data)
+                    setClienteYObra(res.data.obra.id)
+                    console.log('Cliente selected: '+selectedCliente)
+                    /*setSelectedObra(res.data.obra);
+                    setSelectedCliente(allClientes.get(c => c.obras.includes(res.data.obra)))
+                    console.log(res.data.obra)
+                    console.log(selectedObra)*/
+                })
+                .catch(function (error) {
+                    showToast('Error','No se pudo cargar el pedido, intentelo mas tarde','error')
+                    setTimeout(() => {
+                        history.push("/")
+                    }, 3000);
+                })
+            }else{
+                console.log('sin id')
+            }
         })
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
@@ -167,6 +209,11 @@ const RegistrarPedido = ({history}) => {
         />
     ))
 
+    const onChangeCliente = (e) => {
+        setSelectedCliente(e.value)
+        setSelectedObra(null)
+    }
+
     return (
         loadingStart?
         <div style={{"display": "flex"}}>
@@ -179,7 +226,7 @@ const RegistrarPedido = ({history}) => {
             <p className="text-3xl font-bold text-800">Registrar pedido</p>
             <Card title="Obra destino">
                 <span className="p-float-label">
-                    <AutoComplete id="clienteAutocomplete" className='w-full' value={selectedCliente} suggestions={filteredClientes} completeMethod={searchClientes} field="razonSocial" dropdown forceSelection onChange={(e)=>setSelectedCliente(e.value)} />
+                    <AutoComplete id="clienteAutocomplete" className='w-full' value={selectedCliente} suggestions={filteredClientes} completeMethod={searchClientes} field="razonSocial" dropdown forceSelection onChange={(e)=>onChangeCliente(e)} />
                     <label htmlFor="clienteAutocomplete">Razon social del cliente</label>
                 </span>
                 <br/>

@@ -12,6 +12,7 @@ import Menubar from './components/Menubar'
 import PageNotFound from './pages/PageNotFound'
 import RegistrarCliente from './pages/RegistrarCliente'
 import ListadoClientes from './pages/ListadoClientes'
+import ListadoPedidos from './pages/ListadoPedidos'
 import RegistrarObra from './pages/RegistrarObra'
 import RegistrarMaterial from './pages/RegistrarMaterial'
 import RegistrarPedido from './pages/RegistrarPedido'
@@ -29,12 +30,16 @@ function App() {
           <Switch>
             <Route exact path="/" component={PageNotFound} />
             {/*Pongo el exact porque sino la / machea con el resto tambien*/}
-            <Route path="/cliente-nuevo" component={RegistrarCliente} />
-            <Route path="/cliente-listado" component={ListadoClientes} />
-            <Route path="/obra-nueva" component={RegistrarObra} />
-            <Route path="/producto-nuevo" component={RegistrarMaterial} />
-            <Route path="/pedido-nuevo" component={RegistrarPedido} />
-            <Route path="/pago-nuevo" component={RegistrarPago} />
+            <Route exact path="/cliente-nuevo" component={RegistrarCliente} />
+            <Route exact path="/cliente-listado" component={ListadoClientes} />
+            <Route exact path="/obra-nueva" component={RegistrarObra} />
+            <Route exact path="/producto-nuevo" component={RegistrarMaterial} />
+            <Route exact path="/pedido-nuevo" component={RegistrarPedido} />
+            <Route exact path="/pedido-listado" component={ListadoPedidos} />
+            <Route exact path="/pago-nuevo" component={RegistrarPago} />
+
+            <Route path="/pedido-nuevo/:pedidoId" component={RegistrarPedido} />
+
             {/*Por defecto*/}
             <Route component={PageNotFound} />
           </Switch>
