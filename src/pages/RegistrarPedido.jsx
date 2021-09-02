@@ -120,7 +120,7 @@ const RegistrarPedido = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.push("/")
+        history.goBack()
     }
 
     //Valido que ningun campo es vacio
@@ -185,7 +185,7 @@ const RegistrarPedido = ({history}) => {
                     "obra": selectedObra,
                     "detalle": detallesSinId
                 }
-                console.log(data)
+                //console.log(data)
                 axios.post(orderService+'/pedido', data)
                 .then(function (response) {
                     //Ver que hago aca

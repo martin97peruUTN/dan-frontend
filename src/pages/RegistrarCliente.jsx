@@ -112,7 +112,7 @@ const RegistrarCliente = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.push("/")
+        history.goBack()
     }
 
     const ConstructionsList = newClient.obras.map((obra, index) => (

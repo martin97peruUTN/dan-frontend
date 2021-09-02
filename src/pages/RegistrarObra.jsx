@@ -78,7 +78,7 @@ const RegistrarObra = ({history}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         //setObra({...obra, "cliente":selectedCliente})
-        console.log(obra)
+        //console.log(obra)
         if(validObra()){
             setLoadingSubmit(true);
             axios.post(userService+'/obra', obra)
@@ -100,7 +100,7 @@ const RegistrarObra = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.push("/")
+        history.goBack()
     }
 
     return (

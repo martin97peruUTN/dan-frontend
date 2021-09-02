@@ -44,7 +44,7 @@ const RegistrarPago = (props) => {
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
             setTimeout(() => {
-                props.history.push("/")
+                props.history.push("/listado-pago")
             }, 3000);
         })
     }, [])
@@ -87,7 +87,7 @@ const RegistrarPago = (props) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        props.history.push("/")
+        props.history.goBack()
     }
 
     const validPago = () => {
@@ -125,7 +125,7 @@ const RegistrarPago = (props) => {
                 console.log(response);
                 setLoadingSubmit(false);
                 showToast('Exito!','Pago creado correctamente','success')
-                props.history.push("/")
+                props.history.push("/pago-listado")
             })
             .catch(function (error) {
                 console.log(error);

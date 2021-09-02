@@ -57,7 +57,7 @@ const RegistrarMaterial = ({history}) => {
 
     const handleCancel = (event) => {
         event.preventDefault();
-        history.push("/")
+        history.goBack()
     }
 
     return (
