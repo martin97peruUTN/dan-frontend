@@ -30,15 +30,15 @@ function App() {
           <Switch>
             <Route exact path="/" component={PageNotFound} />
             {/*Pongo el exact porque sino la / machea con el resto tambien*/}
-            <Route exact path="/cliente-nuevo" component={RegistrarCliente} />
+            <Route exact path="/cliente" component={RegistrarCliente} />
             <Route exact path="/cliente-listado" component={ListadoClientes} />
-            <Route exact path="/obra-nueva" component={RegistrarObra} />
-            <Route exact path="/producto-nuevo" component={RegistrarMaterial} />
-            <Route exact path="/pedido-nuevo" component={RegistrarPedido} />
+            <Route exact path="/obra" component={RegistrarObra} />
+            <Route exact path="/producto" component={RegistrarMaterial} />
+            <Route exact path="/pedido" component={RegistrarPedido} />
             <Route exact path="/pedido-listado" component={ListadoPedidos} />
-            <Route exact path="/pago-nuevo" component={RegistrarPago} />
+            <Route exact path="/pago" component={RegistrarPago} />
 
-            <Route path="/pedido-nuevo/:pedidoId" component={RegistrarPedido} />
+            <Route path="/pedido/:pedidoId" component={RegistrarPedido} />
 
             {/*Por defecto*/}
             <Route component={PageNotFound} />

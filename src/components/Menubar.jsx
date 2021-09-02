@@ -17,7 +17,7 @@ const Menubar = () => {
                 {
                     label: 'Nuevo',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/cliente-nuevo'
+                    url: '/cliente'
                 },
                 {
                     label: 'Listado',
@@ -33,7 +33,7 @@ const Menubar = () => {
                 {
                     label: 'Nueva',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/obra-nueva'
+                    url: '/obra'
                 }
             ]
         },
@@ -44,7 +44,7 @@ const Menubar = () => {
                 {
                     label: 'Alta',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/producto-nuevo'
+                    url: '/producto'
                 }
             ]
         },
@@ -55,7 +55,7 @@ const Menubar = () => {
                 {
                     label: 'Nuevo',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/pedido-nuevo'
+                    url: '/pedido'
                 },
                 {
                     label: 'Listado',
@@ -71,7 +71,7 @@ const Menubar = () => {
                 {
                     label: 'Registrar',
                     icon: 'pi pi-fw pi-plus',
-                    url: '/pago-nuevo'
+                    url: '/pago'
                 },
                 {
                     label: 'Listado',
