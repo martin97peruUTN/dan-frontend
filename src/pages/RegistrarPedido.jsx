@@ -16,8 +16,8 @@ const RegistrarPedido = ({history}) => {
 
     const {pedidoId} = useParams()
 
-    const[loadingStart, setLoadingStart] = useState(true)
-    const[loadingSubmit, setLoadingSubmit] = useState(false)
+    const [loadingStart, setLoadingStart] = useState(true)
+    const [loadingSubmit, setLoadingSubmit] = useState(false)
     const toast = useRef(null);
     const [allClientes, setAllClientes] = useState([])
     const [filteredClientes, setFilteredClientes] = useState([])
@@ -37,49 +37,11 @@ const RegistrarPedido = ({history}) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
 
-    const setClienteYObra = (id) => {
-        for(let i=0; i<allClientes.length; i++) {
-            for(let j=0; j<allClientes[i].obras.length; j++) {
-                console.log('cliente sub '+i+':'+allClientes[i])
-                console.log('obra sub '+j+':'+allClientes[i].obras[j])
-                if(allClientes[i].obras[j].id === id) {
-                    console.log(allClientes[i])
-                    setSelectedCliente(allClientes[i])
-                    setSelectedObra(allClientes[i].obras[j])
-                    return null
-                }
-            }
-        }
-        console.log('NADA')
-    }
-
     useEffect(() => {
         setLoadingStart(true)
         //va a venir el id del pedido cuando se quiera editar
         axios.get(userService+'/cliente').then((res) => {
             setAllClientes(res.data);
-            setLoadingStart(false)
-        }).then(() => {
-            if(pedidoId){
-                console.log('pedido con id: '+pedidoId)
-                axios.get(orderService+'/pedido/'+pedidoId).then((res) => {
-                    console.log(res.data)
-                    setClienteYObra(res.data.obra.id)
-                    console.log('Cliente selected: '+selectedCliente)
-                    /*setSelectedObra(res.data.obra);
-                    setSelectedCliente(allClientes.get(c => c.obras.includes(res.data.obra)))
-                    console.log(res.data.obra)
-                    console.log(selectedObra)*/
-                })
-                .catch(function (error) {
-                    showToast('Error','No se pudo cargar el pedido, intentelo mas tarde','error')
-                    setTimeout(() => {
-                        history.push("/")
-                    }, 3000);
-                })
-            }else{
-                console.log('sin id')
-            }
         })
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
@@ -98,6 +60,60 @@ const RegistrarPedido = ({history}) => {
             }, 3000);
         })
     }, [])
+
+    useEffect(() => {
+        //Si viene el id del pedido lleno los datos
+        if(pedidoId){
+            console.log('pedido con id: '+pedidoId)
+            axios.get(orderService+'/pedido/'+pedidoId).then((res) => {
+                setClienteYObra(res.data.obra.id)
+                setDate(parseDate(res.data.fechaPedido))
+                setDetails(res.data.detalle)
+                /*setSelectedObra(res.data.obra);
+                setSelectedCliente(allClientes.get(c => c.obras.includes(res.data.obra)))
+                console.log(res.data.obra)
+                console.log(selectedObra)*/
+            }).then(() => {
+                console.log('LOG START')
+                console.log('Cliente selected: ')
+                console.log(selectedCliente)
+                console.log('Obra selected: ')
+                console.log(selectedObra)
+                console.log('Date: '+date)
+                console.log(details)
+                console.log('LOG END')
+            })
+            .catch(function (error) {
+                showToast('Error','No se pudo cargar el pedido, intentelo mas tarde','error')
+                setTimeout(() => {
+                    history.push("/")
+                }, 3000);
+            })
+        }else{
+            console.log('sin id')
+        }
+    }, [allClientes])
+
+    const setClienteYObra = (id) => {
+        for(let i=0; i<allClientes.length; i++) {
+            for(let j=0; j<allClientes[i].obras.length; j++) {
+                //console.log('cliente sub '+i+':'+allClientes[i])
+                //console.log('obra sub '+j+':'+allClientes[i].obras[j])
+                if(allClientes[i].obras[j].id === id) {
+                    //console.log(allClientes[i])
+                    setSelectedCliente(allClientes[i])
+                    setSelectedObra(allClientes[i].obras[j])
+                    return null
+                }
+            }
+        }
+        console.log('NO SE ENCONTRO')
+    }
+
+    const parseDate = (dateJson) => {
+        const dateReturn = new Date(JSON.parse(`\"${dateJson}\"`));
+        return dateReturn;
+    }
 
     const updateDetail = (event, prop, id) => {
         const index = details.findIndex(details => details.id===id)
@@ -236,7 +252,7 @@ const RegistrarPedido = ({history}) => {
                 </span>
             </Card>
             <Card title="Fecha de envio">
-                <Calendar className='w-full' value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
+                <Calendar id='calendar' className='w-full' value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
             </Card>
             <Card title="Detalle"
             footer={

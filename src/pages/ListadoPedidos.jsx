@@ -45,7 +45,7 @@ const ListadoPedidos = (props) => {
 
     const handleEdit = (id) => {
         //event.preventDefault();
-
+        props.history.push("/pedido-nuevo/"+id)
     }
 
     const cardsMarkup = pedidos.map((pedido) => (
