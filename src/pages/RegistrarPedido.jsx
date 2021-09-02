@@ -46,7 +46,7 @@ const RegistrarPedido = ({history}) => {
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los clientes, intentelo mas tarde','error')
             setTimeout(() => {
-                history.push("/")
+                history.push("/pedido-listado")
             }, 3000);
         })
         axios.get(productService+'/material').then((res) => {
@@ -56,7 +56,7 @@ const RegistrarPedido = ({history}) => {
         .catch(function (error) {
             showToast('Error','No se pudieron cargar los productos, intentelo mas tarde','error')
             setTimeout(() => {
-                history.push("/")
+                history.push("/pedido-listado")
             }, 3000);
         })
     }, [])
@@ -69,24 +69,11 @@ const RegistrarPedido = ({history}) => {
                 setClienteYObra(res.data.obra.id)
                 setDate(parseDate(res.data.fechaPedido))
                 setDetails(res.data.detalle)
-                /*setSelectedObra(res.data.obra);
-                setSelectedCliente(allClientes.get(c => c.obras.includes(res.data.obra)))
-                console.log(res.data.obra)
-                console.log(selectedObra)*/
-            }).then(() => {
-                console.log('LOG START')
-                console.log('Cliente selected: ')
-                console.log(selectedCliente)
-                console.log('Obra selected: ')
-                console.log(selectedObra)
-                console.log('Date: '+date)
-                console.log(details)
-                console.log('LOG END')
             })
             .catch(function (error) {
                 showToast('Error','No se pudo cargar el pedido, intentelo mas tarde','error')
                 setTimeout(() => {
-                    history.push("/")
+                    history.push("/pedido-listado")
                 }, 3000);
             })
         }else{
@@ -97,10 +84,7 @@ const RegistrarPedido = ({history}) => {
     const setClienteYObra = (id) => {
         for(let i=0; i<allClientes.length; i++) {
             for(let j=0; j<allClientes[i].obras.length; j++) {
-                //console.log('cliente sub '+i+':'+allClientes[i])
-                //console.log('obra sub '+j+':'+allClientes[i].obras[j])
                 if(allClientes[i].obras[j].id === id) {
-                    //console.log(allClientes[i])
                     setSelectedCliente(allClientes[i])
                     setSelectedObra(allClientes[i].obras[j])
                     return null
@@ -111,7 +95,7 @@ const RegistrarPedido = ({history}) => {
     }
 
     const parseDate = (dateJson) => {
-        const dateReturn = new Date(JSON.parse(`\"${dateJson}\"`));
+        const dateReturn = new Date(JSON.parse(`"${dateJson}"`));
         return dateReturn;
     }
 
@@ -181,6 +165,11 @@ const RegistrarPedido = ({history}) => {
         setFilteredObras(_filteredObras)
     }
 
+    const onChangeCliente = (e) => {
+        setSelectedCliente(e.value)
+        setSelectedObra(null)
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(date)
@@ -203,7 +192,7 @@ const RegistrarPedido = ({history}) => {
                     console.log(response);
                     setLoadingSubmit(false);
                     showToast('Exito!','Pedido creado correctamente','success')
-                    history.push("/")
+                    history.push("/pedido-listado")
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -216,19 +205,23 @@ const RegistrarPedido = ({history}) => {
         }
     }
 
+    const getDetail = (prop, id) => {
+        const index = details.findIndex(details => details.id===id)
+        return details[index][prop];
+    }
+
     const DetailsList = details.map((detail, index) => (
         <DetailCard
             key={detail.id}
+            id={detail.id}
             onDelete = {() => handleDeleteDetail(index)}
             updateDetail = {(event, prop) => updateDetail(event, prop, detail.id)}
             allProductos = {allProductos}
+            producto={getDetail("producto", detail.id)}
+            cantidad={getDetail("cantidad", detail.id)}
+            precio={getDetail("precio", detail.id)}
         />
     ))
-
-    const onChangeCliente = (e) => {
-        setSelectedCliente(e.value)
-        setSelectedObra(null)
-    }
 
     return (
         loadingStart?

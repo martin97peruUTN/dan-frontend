@@ -29,7 +29,7 @@ const ListadoPedidos = (props) => {
     }, [])
 
     const parseDate = (dateJson) => {
-        const date = new Date(JSON.parse(`\"${dateJson}\"`));
+        const date = new Date(JSON.parse(`"${dateJson}"`));
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
 

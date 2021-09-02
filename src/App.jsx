@@ -38,7 +38,7 @@ function App() {
             <Route exact path="/pedido-listado" component={ListadoPedidos} />
             <Route exact path="/pago" component={RegistrarPago} />
 
-            <Route path="/pedido/:pedidoId" component={RegistrarPedido} />
+            <Route exact path="/pedido/:pedidoId" component={RegistrarPedido} />
 
             {/*Por defecto*/}
             <Route component={PageNotFound} />

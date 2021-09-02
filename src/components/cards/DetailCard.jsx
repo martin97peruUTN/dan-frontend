@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import CardSecondary from './CardSecondary'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext';
@@ -9,6 +9,13 @@ const DetailCard = (props) => {
 
     const [productoValue, setProductoValue] = useState()
     const [filteredProductos, setFilteredProductos] = useState()
+
+    useEffect(() => {
+        if(props.producto){
+            const index = props.allProductos.findIndex(p => p.id === props.producto.id)
+            setProductoValue(props.allProductos[index])
+        }
+    }, [])
 
     const updateProducto = (event) => {
         setProductoValue(event.value)
@@ -37,13 +44,13 @@ const DetailCard = (props) => {
             </span>
             <br/>
             <span className="p-float-label">
-                <InputText id="cantidad" className='w-full' keyfilter="num" onChange={(event) => props.updateDetail(event, "cantidad")} />
-                <label htmlFor="cantidad">Cantidad</label>
+                <InputText id={"cantidad-"+props.id} className='w-full' value={props.cantidad} keyfilter="num" onChange={(event) => props.updateDetail(event, "cantidad")} />
+                <label htmlFor={"cantidad-"+props.id}>Cantidad</label>
             </span>
             <br/>
             <span className="p-float-label">
-                <InputText id="precio" className='w-full' keyfilter="num" onChange={(event) => props.updateDetail(event, "precio")} />
-                <label htmlFor="precio">Precio</label>
+                <InputText id={"precio-"+props.id} className='w-full' value={props.precio} keyfilter="num" onChange={(event) => props.updateDetail(event, "precio")} />
+                <label htmlFor={"precio-"+props.id}>Precio</label>
             </span>
         </CardSecondary>
     )
