@@ -59,7 +59,7 @@ const RegistrarPago = (props) => {
             console.log('pago con id: '+pagoId)
             axios.get(currentAccountService+'/pago/'+pagoId).then((res) => {
                 setClienteEditar(res.data.cliente.id)
-                setMedioDePago({"type": medio.type})
+                setMedioDePago(res.data.medio)
             })
             .catch(function (error) {
                 showToast('Error','No se pudo cargar el pago, intentelo mas tarde','error')
@@ -75,13 +75,29 @@ const RegistrarPago = (props) => {
     useEffect(() => {
         switch (medioDePago.type) {
             case "efectivo":
-                setMedioPagoCard(<EfectivoCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                setMedioPagoCard(<EfectivoCard
+                    updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}
+                    observacion={medioDePago.observacion}
+                    nroRecibo={medioDePago.nroRecibo}
+                />)
                 break;
             case "transferencia":
-                setMedioPagoCard(<TransferenciaCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                setMedioPagoCard(<TransferenciaCard
+                    updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}
+                    observacion={medioDePago.observacion}
+                    cbuOrigen = {medioDePago.cbuOrigen}
+                    cbuDestino = {medioDePago.cbuDestino}
+                    codigoTransferencia = {medioDePago.codigoTransferencia}
+                />)
                 break;
             case "cheque":
-                setMedioPagoCard(<ChequeCard calendarValue={medioDePago.fechaCobro} updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
+                setMedioPagoCard(<ChequeCard
+                    updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}
+                    observacion={medioDePago.observacion}
+                    nroCheque={medioDePago.nroCheque}
+                    calendarValue={parseDate(medioDePago.fechaCobro)}
+                    banco={medioDePago.banco}
+                />)
                 break;
             default:
                 setMedioPagoCard(<CardSecondary title="Seleccione un medio de pago"></CardSecondary>)
@@ -90,13 +106,19 @@ const RegistrarPago = (props) => {
     }, [medioDePago])
     //tengo que ponerlo asi y no medioDePago.type porque los campos internos andan mal sino, no se que onda
 
+    const parseDate = (dateJson) => {
+        const dateReturn = new Date(JSON.parse(`"${dateJson}"`));
+        return dateReturn;
+    }
+
     const setClienteEditar = (idCliente) => {
         for(let i=0; i<allClientes.length; i++) {
             if(allClientes[i].id == idCliente){
                 setSelectedCliente(allClientes[i])
+                return null
             }
         }
-        console.log('NO SE ENCONTRO')
+        console.log('NO SE ENCONTRO CLIENTE')
     }
 
     const updateMedioPago = (event, prop) => {
