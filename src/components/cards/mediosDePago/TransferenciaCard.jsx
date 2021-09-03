@@ -6,7 +6,7 @@ const TransferenciaCard = (props) => {
     return (
         <CardSecondary title={"Transferencia"}>
             <span className="p-float-label">
-                <InputText id="observacion" className='w-full' onChange={(event) => props.updateMedioPago(event, "observacion")} />
+                <InputText id="observacion" className='w-full' onChange={(event) => props.updateMedioPago(event, "observacion")} tooltip="Ingrese el monto de la transaccion o cualquier informacion relevante" tooltipOptions={{ position: 'top' }}/>
                 <label htmlFor="observacion">Observacion</label>
             </span>
             <br/>

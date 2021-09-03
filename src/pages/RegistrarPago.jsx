@@ -14,7 +14,11 @@ import ChequeCard from '../components/cards/mediosDePago/ChequeCard'
 import TransferenciaCard from '../components/cards/mediosDePago/TransferenciaCard'
 import {currentAccountService} from '../Url'
 
+import {useParams} from "react-router-dom"
+
 const RegistrarPago = (props) => {
+
+    const {pagoId} = useParams()
 
     const[loadingStart, setLoadingStart] = useState(true)
     const[loadingSubmit, setLoadingSubmit] = useState(false)
@@ -50,6 +54,25 @@ const RegistrarPago = (props) => {
     }, [])
 
     useEffect(() => {
+        //Si viene el id del pedido lleno los datos
+        if(pagoId){
+            console.log('pago con id: '+pagoId)
+            axios.get(currentAccountService+'/pago/'+pagoId).then((res) => {
+                setClienteEditar(res.data.cliente.id)
+                setMedioDePago({"type": medio.type})
+            })
+            .catch(function (error) {
+                showToast('Error','No se pudo cargar el pago, intentelo mas tarde','error')
+                setTimeout(() => {
+                    props.history.push("/pago-listado")
+                }, 3000);
+            })
+        }else{
+            console.log('sin id')
+        }
+    }, [allClientes])
+
+    useEffect(() => {
         switch (medioDePago.type) {
             case "efectivo":
                 setMedioPagoCard(<EfectivoCard updateMedioPago={(event, prop)=>updateMedioPago(event, prop)}/>)
@@ -66,6 +89,15 @@ const RegistrarPago = (props) => {
         }
     }, [medioDePago])
     //tengo que ponerlo asi y no medioDePago.type porque los campos internos andan mal sino, no se que onda
+
+    const setClienteEditar = (idCliente) => {
+        for(let i=0; i<allClientes.length; i++) {
+            if(allClientes[i].id == idCliente){
+                setSelectedCliente(allClientes[i])
+            }
+        }
+        console.log('NO SE ENCONTRO')
+    }
 
     const updateMedioPago = (event, prop) => {
         const medioPagoCopy = {...medioDePago}

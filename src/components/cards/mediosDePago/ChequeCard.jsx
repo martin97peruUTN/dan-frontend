@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react'
 import CardSecondary from '../CardSecondary'
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
+import { Tooltip } from 'primereact/tooltip';
 
 const ChequeCard = (props) => {
 
     return (
         <CardSecondary title={"Cheque"}>
             <span className="p-float-label">
-                <InputText id="observacion" className='w-full' onChange={(event) => props.updateMedioPago(event, "observacion")} />
+                <InputText id="observacion" className='w-full' onChange={(event) => props.updateMedioPago(event, "observacion")} tooltip="Ingrese el monto de la transaccion o cualquier informacion relevante" tooltipOptions={{ position: 'top' }}/>
                 <label htmlFor="observacion">Observacion</label>
             </span>
             <br/>
