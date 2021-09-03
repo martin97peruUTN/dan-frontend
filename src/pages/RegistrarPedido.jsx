@@ -232,7 +232,7 @@ const RegistrarPedido = ({history}) => {
         :
         <div>
             <Toast ref={toast} />
-            <p className="text-3xl font-bold text-800">Registrar pedido</p>
+            <p className="text-3xl font-bold text-800">{pedidoId?"Editar pedido":"Registrar pedido"}</p>
             <Card title="Obra destino">
                 <span className="p-float-label">
                     <AutoComplete id="clienteAutocomplete" className='w-full' value={selectedCliente} suggestions={filteredClientes} completeMethod={searchClientes} field="razonSocial" dropdown forceSelection onChange={(e)=>onChangeCliente(e)} />

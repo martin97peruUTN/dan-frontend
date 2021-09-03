@@ -200,7 +200,7 @@ const RegistrarPago = (props) => {
         :
         <div>
             <Toast ref={toast} />
-            <p className="text-3xl font-bold text-800">Registrar pago</p>
+            <p className="text-3xl font-bold text-800">{pagoId?"Editar pago":"Registrar pago"}</p>
             <Card title="Datos del pago"
             footer={
                 <div>
