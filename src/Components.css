@@ -4,7 +4,37 @@ body {
     background-color: var(--light);
 }
 
-/*NavBar*/
+/*Buttons*/
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--dark)
+}
+.btn-primary:hover{
+    background-color: var(--light) !important;
+    border-color: var(--primary) !important;
+}
+
+/*Menubar*/
+.p-menubar {
+    background-color: var(--primary) !important;
+}
+.p-menu-list {
+    background: var(--primary) !important;
+}
+.p-submenu-list {
+    background: var(--primary) !important;
+}
+.p-menuitem {
+    background-color: var(--primary) !important;
+}
+.p-menuitem:active {
+    background-color: var(--dark) !important;
+}
+.p-menuitem-text, .p-menuitem-icon, .p-submenu-icon {
+    color: var(--text-primary) !important;
+}
+
+/*NavBar (ya no se usa)*/
 .dropdown-menu {
     background-color: var(--primary) !important;
     padding: 0;
@@ -42,36 +72,4 @@ body {
 }
 .navbar-btn:hover {
     background-color: var(--light) !important;
-}
-
-/*Menubar*/
-.p-menubar {
-    background-color: var(--primary) !important;
-}
-.p-menu-list {
-    background: var(--primary) !important;
-}
-.p-submenu-list {
-    background: var(--primary) !important;
-}
-.p-menuitem {
-    background-color: var(--primary) !important;
-}
-.p-menuitem:active {
-    background-color: var(--dark) !important;
-}
-.p-menuitem-text, .p-menuitem-icon, .p-submenu-icon {
-    color: var(--text-primary) !important;
-}
-
-/*Card*/
-
-/*Buttons*/
-.btn-primary {
-    background-color: var(--primary) !important;
-    border-color: var(--dark)
-}
-.btn-primary:hover{
-    background-color: var(--light) !important;
-    border-color: var(--primary) !important;
 }

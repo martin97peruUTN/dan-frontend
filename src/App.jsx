@@ -13,6 +13,7 @@ import PageNotFound from './pages/PageNotFound'
 import RegistrarCliente from './pages/RegistrarCliente'
 import ListadoClientes from './pages/ListadoClientes'
 import ListadoPedidos from './pages/ListadoPedidos'
+import ListadoPagos from './pages/ListadoPagos'
 import RegistrarObra from './pages/RegistrarObra'
 import RegistrarMaterial from './pages/RegistrarMaterial'
 import RegistrarPedido from './pages/RegistrarPedido'
@@ -37,8 +38,10 @@ function App() {
             <Route exact path="/pedido" component={RegistrarPedido} />
             <Route exact path="/pedido-listado" component={ListadoPedidos} />
             <Route exact path="/pago" component={RegistrarPago} />
+            <Route exact path="/pago-listado" component={ListadoPagos} />
 
             <Route exact path="/pedido/:pedidoId" component={RegistrarPedido} />
+            <Route exact path="/pago/:pagoId" component={RegistrarPago} />
 
             {/*Por defecto*/}
             <Route component={PageNotFound} />
