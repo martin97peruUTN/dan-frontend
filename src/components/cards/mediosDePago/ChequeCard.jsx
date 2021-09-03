@@ -8,8 +8,8 @@ const ChequeCard = (props) => {
     return (
         <CardSecondary title={"Cheque"}>
             <span className="p-float-label">
-                <InputText id="observacion" className='w-full' keyfilter="num" onChange={(event) => props.updateMedioPago(event, "observacion")} />
-                <label htmlFor="observacion">Observacion (monto)</label>
+                <InputText id="observacion" className='w-full' onChange={(event) => props.updateMedioPago(event, "observacion")} />
+                <label htmlFor="observacion">Observacion</label>
             </span>
             <br/>
             <span className="p-float-label">

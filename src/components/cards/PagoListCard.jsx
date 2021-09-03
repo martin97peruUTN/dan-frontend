@@ -19,9 +19,9 @@ const PagoListCard = (props) => {
         >
             <div>{props.cliente}</div>
             <div>Fecha del pago: {props.fechaPago}</div>
-            <div>Observacion (monto): {props.observacion}</div>
             <div>Medio de pago: {props.medioType}</div>
-            
+            <div>Observacion: {props.observacion}</div>
+
             {props.nroRecibo? <div>Numero de recibo: {props.nroRecibo}</div>:null}
 
             {props.cbuOrigen? <div>CBU origen: {props.cbuOrigen}</div>:null}
