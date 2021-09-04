@@ -185,20 +185,37 @@ const RegistrarPedido = ({history}) => {
                     "obra": selectedObra,
                     "detalle": detallesSinId
                 }
-                //console.log(data)
-                axios.post(orderService+'/pedido', data)
-                .then(function (response) {
-                    //Ver que hago aca
-                    console.log(response);
-                    setLoadingSubmit(false);
-                    showToast('Exito!','Pedido creado correctamente','success')
-                    history.push("/pedido-listado")
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
-                    setLoadingSubmit(false);
-                })
+                console.log("DATA: ")
+                console.log(data)
+                if(pedidoId){
+                    axios.put(orderService+'/pedido/'+pedidoId, data)
+                    .then(function (response) {
+                        //Ver que hago aca
+                        console.log(response);
+                        setLoadingSubmit(false);
+                        showToast('Exito!','Pedido guardado correctamente','success')
+                        history.push("/pedido-listado")
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
+                        setLoadingSubmit(false);
+                    })
+                }else{
+                    axios.post(orderService+'/pedido', data)
+                    .then(function (response) {
+                        //Ver que hago aca
+                        console.log(response);
+                        setLoadingSubmit(false);
+                        showToast('Exito!','Pedido creado correctamente','success')
+                        history.push("/pedido-listado")
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
+                        setLoadingSubmit(false);
+                    })
+                }
             }else{
                 showToast('Error','FALTAN LLENAR CAMPOS','warn')
             }
