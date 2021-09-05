@@ -4,19 +4,24 @@ import ClientListCard from '../components/cards/ClientListCard'
 import {userService} from '../Url'
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
+import { useCookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
 const ListadoClientes = ({history}) => {
 
     const[loading, setLoading] = useState(true)
     const [clientes, setClientes] = useState([])
     const toast = useRef(null);
-
+    //const [cookies, setCookies] = useCookies(['acces_token'])
+    const cookies = new Cookies();
     const showToast = (summary, message, severity) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
 
     useEffect(() => {
-        axios.get(userService+'/cliente').then((res) => {
+        let accessToken = cookies.get('access_token')
+        console.log(accessToken)
+        axios.get(userService+'/cliente', { headers: { Authorization: 'Bearer ' + accessToken } }).then((res) => {
             setClientes(res.data);
             setLoading(false)
         })

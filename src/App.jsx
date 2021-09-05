@@ -18,6 +18,7 @@ import RegistrarObra from './pages/RegistrarObra'
 import RegistrarMaterial from './pages/RegistrarMaterial'
 import RegistrarPedido from './pages/RegistrarPedido'
 import RegistrarPago from "./pages/RegistrarPago";
+import Login from "./pages/Login";
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
         <Menubar className=""/>
         <div className="mx-1 my-3 sm:mx-6">
           <Switch>
-            <Route exact path="/" component={PageNotFound} />
+            <Route exact path="/" component={Login} />
             {/*Pongo el exact porque sino la / machea con el resto tambien*/}
             <Route exact path="/cliente" component={RegistrarCliente} />
             <Route exact path="/cliente-listado" component={ListadoClientes} />
@@ -42,6 +43,7 @@ function App() {
 
             <Route exact path="/pedido/:pedidoId" component={RegistrarPedido} />
             <Route exact path="/pago/:pagoId" component={RegistrarPago} />
+            <Route exact path="/login" component={Login} />
 
             {/*Por defecto*/}
             <Route component={PageNotFound} />
