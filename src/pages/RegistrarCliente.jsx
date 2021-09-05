@@ -85,7 +85,7 @@ const RegistrarCliente = ({history}) => {
                     console.log(response);
                     setLoading(false);
                     showToast('Exito!','Cliente creado correctamente','success')
-                    history.push("/")
+                    history.push("/cliente-listado")
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -150,6 +150,16 @@ const RegistrarCliente = ({history}) => {
                 <span className="p-float-label">
                     <InputText id="mail" className='w-full' keyfilter="email" onChange={(event) => setNewClient({...newClient, "mail": event.target.value})} />
                     <label htmlFor="mail">Mail</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="maxCuentaOnline" className='w-full' keyfilter="num" onChange={(event) => setNewClient({...newClient, "maxCuentaOnline": event.target.value})} />
+                    <label htmlFor="maxCuentaOnline">Maximo cuenta online</label>
+                </span>
+                <br/>
+                <span className="p-float-label">
+                    <InputText id="saldoActual" className='w-full' keyfilter="num" onChange={(event) => setNewClient({...newClient, "saldoActual": event.target.value})} />
+                    <label htmlFor="saldoActual">Saldo actual</label>
                 </span>
             </Card>
             <Card title='Obras'
