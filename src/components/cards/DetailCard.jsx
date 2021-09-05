@@ -36,22 +36,44 @@ const DetailCard = (props) => {
 
     return (
         <CardSecondary
-            footer={<Button className="p-button-danger" onClick={props.onDelete}>Borrar detalle</Button>}
+            footer={!props.disabled?<Button className="p-button-danger" onClick={props.onDelete}>Borrar detalle</Button>:null}
         >
-            <span className="p-float-label">
-                <AutoComplete id="productoAutocomplete" className='w-full' value={productoValue} suggestions={filteredProductos} completeMethod={searchProductos} field="nombre" dropdown forceSelection onChange={(e)=>updateProducto(e)} />
-                <label htmlFor="productoAutocomplete">Producto</label>
-            </span>
-            <br/>
-            <span className="p-float-label">
-                <InputText id={"cantidad-"+props.id} className='w-full' value={props.cantidad} keyfilter="num" onChange={(event) => props.updateDetail(event, "cantidad")} />
-                <label htmlFor={"cantidad-"+props.id}>Cantidad</label>
-            </span>
-            <br/>
-            <span className="p-float-label">
-                <InputText id={"precio-"+props.id} className='w-full' value={props.precio} keyfilter="num" onChange={(event) => props.updateDetail(event, "precio")} />
-                <label htmlFor={"precio-"+props.id}>Precio</label>
-            </span>
+            {props.disabled?
+                <div>
+                    <span className="p-float-label">
+                        <AutoComplete disabled id="productoAutocomplete" className='w-full' value={productoValue} suggestions={filteredProductos} completeMethod={searchProductos} field="nombre" dropdown forceSelection onChange={(e)=>updateProducto(e)} />
+                        <label htmlFor="productoAutocomplete">Producto</label>
+                    </span>
+                    <br/>
+                    <span className="p-float-label">
+                        <InputText disabled id={"cantidad-"+props.id} className='w-full' value={props.cantidad} keyfilter="num" onChange={(event) => props.updateDetail(event, "cantidad")} />
+                        <label htmlFor={"cantidad-"+props.id}>Cantidad</label>
+                    </span>
+                    <br/>
+                    <span className="p-float-label">
+                        <InputText disabled id={"precio-"+props.id} className='w-full' value={props.precio} keyfilter="num" onChange={(event) => props.updateDetail(event, "precio")} />
+                        <label htmlFor={"precio-"+props.id}>Precio</label>
+                    </span>
+                </div>
+            :
+                <div>
+                    <span className="p-float-label">
+                        <AutoComplete id="productoAutocomplete" className='w-full' value={productoValue} suggestions={filteredProductos} completeMethod={searchProductos} field="nombre" dropdown forceSelection onChange={(e)=>updateProducto(e)} />
+                        <label htmlFor="productoAutocomplete">Producto</label>
+                    </span>
+                    <br/>
+                    <span className="p-float-label">
+                        <InputText id={"cantidad-"+props.id} className='w-full' value={props.cantidad} keyfilter="num" onChange={(event) => props.updateDetail(event, "cantidad")} />
+                        <label htmlFor={"cantidad-"+props.id}>Cantidad</label>
+                    </span>
+                    <br/>
+                    <span className="p-float-label">
+                        <InputText id={"precio-"+props.id} className='w-full' value={props.precio} keyfilter="num" onChange={(event) => props.updateDetail(event, "precio")} />
+                        <label htmlFor={"precio-"+props.id}>Precio</label>
+                    </span>
+                </div>
+            }
+            
         </CardSecondary>
     )
 }

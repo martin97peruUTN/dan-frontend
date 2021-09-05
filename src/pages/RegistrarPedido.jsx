@@ -33,10 +33,10 @@ const RegistrarPedido = ({history}) => {
             "id": detailsId-1
         }
     ])
-    const [estado, setEstado] = useState()
+    const [estado, setEstado] = useState({"id":1, "estado":'NUEVO'})
 
     const allEstados = [
-        //{label: 'Nuevo', value: {"id":1, "estado":'NUEVO'}},
+        {label: 'Nuevo', value: {"id":1, "estado":'NUEVO'}},
         {label: 'Confirmado', value: {"id":2, "estado":'CONFIRMADO'}},
         //{label: 'Pendiente', value: {"id":3, "estado":'PENDIENTE'}},
         {label: 'Cancelado', value: {"id":4, "estado":'CANCELADO'}},
@@ -266,6 +266,7 @@ const RegistrarPedido = ({history}) => {
             producto={getDetail("producto", detail.id)}
             cantidad={getDetail("cantidad", detail.id)}
             precio={getDetail("precio", detail.id)}
+            disabled={estado.id!=1}
         />
     ))
 
@@ -305,7 +306,7 @@ const RegistrarPedido = ({history}) => {
             <Card title="Detalle"
             footer={
                 <div>
-                    <Button className="btn btn-primary" onClick={(event)=>handleAddDetail(event)}>Agregar detalle</Button>
+                    {estado.id==1?<Button className="btn btn-primary" onClick={(event)=>handleAddDetail(event)}>Agregar detalle</Button>:null}
                     <Divider/>
                     <div className="flex justify-content-between">
                         <Button className="p-button-danger" onClick={(event)=> handleCancel(event)} label="Cancelar"></Button>
