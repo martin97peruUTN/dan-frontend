@@ -35,6 +35,8 @@ const RegistrarPago = (props) => {
         {label: 'Cheque', value: 'cheque'}
     ];
 
+    const [dateUpdate, setDateUpdate] = useState()
+
     const showToast = (summary, message, severity) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
     }
@@ -60,6 +62,7 @@ const RegistrarPago = (props) => {
             axios.get(currentAccountService+'/pago/'+pagoId).then((res) => {
                 setClienteEditar(res.data.cliente.id)
                 setMedioDePago(res.data.medio)
+                setDateUpdate(res.data.fechaPago)
             })
             .catch(function (error) {
                 showToast('Error','No se pudo cargar el pago, intentelo mas tarde','error')
@@ -166,26 +169,47 @@ const RegistrarPago = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = {
-            "cliente":selectedCliente,
-            "medio":medioDePago
-        }
         //console.log(data)
         if(validPago()){
             setLoadingSubmit(true);
-            axios.post(currentAccountService+'/pago', data)
-            .then(function (response) {
-                //Ver que hago aca
-                console.log(response);
-                setLoadingSubmit(false);
-                showToast('Exito!','Pago creado correctamente','success')
-                props.history.push("/pago-listado")
-            })
-            .catch(function (error) {
-                console.log(error);
-                showToast('Error','No se pudo guardar el pago, intentelo mas tarde','error')
-                setLoadingSubmit(false);
-            })
+            if(pagoId){
+                const data = {
+                    "id": pagoId,
+                    "cliente":selectedCliente,
+                    "medio":medioDePago,
+                    "fechaPago":dateUpdate
+                }
+                axios.put(currentAccountService+'/pago/'+pagoId, data)
+                    .then(function (response) {
+                        console.log(response);
+                        setLoadingSubmit(false);
+                        showToast('Exito!','Pago guardado correctamente','success')
+                        props.history.push("/pago-listado")
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
+                        setLoadingSubmit(false);
+                    })
+            }else{
+                const data = {
+                    "cliente":selectedCliente,
+                    "medio":medioDePago
+                }
+                axios.post(currentAccountService+'/pago', data)
+                .then(function (response) {
+                    //Ver que hago aca
+                    console.log(response);
+                    setLoadingSubmit(false);
+                    showToast('Exito!','Pago creado correctamente','success')
+                    props.history.push("/pago-listado")
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    showToast('Error','No se pudo guardar el pago, intentelo mas tarde','error')
+                    setLoadingSubmit(false);
+                })
+            }
         }else{
             showToast('Error','FALTAN LLENAR CAMPOS','warn')
         }

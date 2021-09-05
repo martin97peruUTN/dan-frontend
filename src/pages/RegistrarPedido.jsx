@@ -4,6 +4,7 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { Calendar } from 'primereact/calendar';
 import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button'
+import { Dropdown } from 'primereact/dropdown';
 import axios from 'axios'
 import {userService, orderService, productService} from '../Url'
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -26,12 +27,24 @@ const RegistrarPedido = ({history}) => {
     const [selectedObra, setSelectedObra] = useState()
     const [allProductos, setAllProductos] = useState()
     const [date, setDate] = useState()
-    const [detailsId, setDetailsId]=useState(1)
+    const [detailsId, setDetailsId]=useState(1001)
     const [details, setDetails] = useState([
         {
             "id": detailsId-1
         }
     ])
+    const [estado, setEstado] = useState()
+
+    const allEstados = [
+        {label: 'Nuevo', value: {"id":1, "estado":'NUEVO'}},
+        {label: 'Confirmado', value: {"id":2, "estado":'CONFIRMADO'}},
+        {label: 'Pendiente', value: {"id":3, "estado":'PENDIENTE'}},
+        {label: 'Cancelado', value: {"id":4, "estado":'CANCELADO'}},
+        {label: 'Aceptado', value: {"id":5, "estado":'ACEPTADO'}},
+        {label: 'Rechazado', value: {"id":6, "estado":'RECHAZADO'}},
+        {label: 'En preparacion', value: {"id":7, "estado":'EN PREPARACION'}},
+        {label: 'Entregado', value: {"id":8, "estado":'ENTREGADO'}},
+    ];
 
     const showToast = (summary, message, severity) => {
         toast.current.show({severity:severity, summary: summary, detail:message, life: 3000});
@@ -69,6 +82,7 @@ const RegistrarPedido = ({history}) => {
                 setClienteYObra(res.data.obra.id)
                 setDate(parseDate(res.data.fechaPedido))
                 setDetails(res.data.detalle)
+                setEstado(res.data.estado)
             })
             .catch(function (error) {
                 showToast('Error','No se pudo cargar el pedido, intentelo mas tarde','error')
@@ -178,30 +192,45 @@ const RegistrarPedido = ({history}) => {
         }else{
             if(validForm()){
                 setLoadingSubmit(true);
-                const detallesSinId = details.map(item => ({...item}))
-                detallesSinId.map(item => item.id = null)
-                const data = {
-                    "fechaPedido": date,
-                    "obra": selectedObra,
-                    "detalle": detallesSinId
-                }
-                console.log("DATA: ")
-                console.log(data)
                 if(pedidoId){
+                    const data = {
+                        "id": pedidoId,
+                        "fechaPedido": date,
+                        "obra": selectedObra,
+                        "detalle": details,
+                        "estado": estado
+                    }
+                    console.log(data)
                     axios.put(orderService+'/pedido/'+pedidoId, data)
                     .then(function (response) {
-                        //Ver que hago aca
                         console.log(response);
                         setLoadingSubmit(false);
                         showToast('Exito!','Pedido guardado correctamente','success')
                         history.push("/pedido-listado")
                     })
                     .catch(function (error) {
-                        console.log(error);
-                        showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
-                        setLoadingSubmit(false);
+                        console.log("ERROR:")
+                        console.log(error.response.status)
+                        if(error.response.status === 403){
+                            console.log(error);
+                            showToast('Error','No puede pasar el pedido a ese estado','warn')
+                            setLoadingSubmit(false);
+                        }else{
+                            console.log(error);
+                            showToast('Error','No se pudo guardar el pedido, intentelo mas tarde','error')
+                            setLoadingSubmit(false);
+                        }
                     })
                 }else{
+                    const detallesSinId = details.map(item => ({...item}))
+                    detallesSinId.map(item => item.id = null)
+                    const data = {
+                        "fechaPedido": date,
+                        "obra": selectedObra,
+                        "detalle": detallesSinId
+                    }
+                    console.log("DATA: ")
+                    console.log(data)
                     axios.post(orderService+'/pedido', data)
                     .then(function (response) {
                         //Ver que hago aca
@@ -264,6 +293,15 @@ const RegistrarPedido = ({history}) => {
             <Card title="Fecha de envio">
                 <Calendar id='calendar' className='w-full' value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999"/>
             </Card>
+            {pedidoId?
+            <Card title="Estado">
+            <span className="p-float-label">
+                <Dropdown id="estadoDropdown" className='w-full' value={estado} options={allEstados} onChange={e=>setEstado(e.value)} />
+                <label htmlFor="estadoDropdown">Estado del pedido</label>
+            </span>
+            </Card>
+            :null
+            }
             <Card title="Detalle"
             footer={
                 <div>
