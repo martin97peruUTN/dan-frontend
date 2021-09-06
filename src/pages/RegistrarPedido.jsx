@@ -38,10 +38,10 @@ const RegistrarPedido = ({history}) => {
     const allEstados = [
         {label: 'Nuevo', value: {"id":1, "estado":'NUEVO'}},
         {label: 'Confirmado', value: {"id":2, "estado":'CONFIRMADO'}},
-        //{label: 'Pendiente', value: {"id":3, "estado":'PENDIENTE'}},
+        {label: 'Pendiente', value: {"id":3, "estado":'PENDIENTE'}},
         {label: 'Cancelado', value: {"id":4, "estado":'CANCELADO'}},
         {label: 'Aceptado', value: {"id":5, "estado":'ACEPTADO'}},
-        //{label: 'Rechazado', value: {"id":6, "estado":'RECHAZADO'}},
+        {label: 'Rechazado', value: {"id":6, "estado":'RECHAZADO'}},
         {label: 'En preparacion', value: {"id":7, "estado":'EN PREPARACION'}},
         {label: 'Entregado', value: {"id":8, "estado":'ENTREGADO'}},
     ];

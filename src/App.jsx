@@ -19,6 +19,8 @@ import RegistrarMaterial from './pages/RegistrarMaterial'
 import RegistrarPedido from './pages/RegistrarPedido'
 import RegistrarPago from "./pages/RegistrarPago";
 import HomePage from "./pages/HomePage";
+import ListadoProductos from "./pages/ListadoProductos"
+import ListadosObras from "./pages/ListadoObras"
 
 function App() {
 
@@ -36,14 +38,15 @@ function App() {
             <Route exact path="/cliente" component={RegistrarCliente} />
             <Route exact path="/cliente-listado" component={ListadoClientes} />
             <Route exact path="/obra" component={RegistrarObra} />
+            <Route exact path="/obra-listado" component={ListadosObras} />
             <Route exact path="/producto" component={RegistrarMaterial} />
+            <Route exact path="/producto-listado" component={ListadoProductos} />
             <Route exact path="/pedido" component={RegistrarPedido} />
+            <Route exact path="/pedido/:pedidoId" component={RegistrarPedido} />
             <Route exact path="/pedido-listado" component={ListadoPedidos} />
             <Route exact path="/pago" component={RegistrarPago} />
-            <Route exact path="/pago-listado" component={ListadoPagos} />
-
-            <Route exact path="/pedido/:pedidoId" component={RegistrarPedido} />
             <Route exact path="/pago/:pagoId" component={RegistrarPago} />
+            <Route exact path="/pago-listado" component={ListadoPagos} />
 
             {/*Por defecto*/}
             <Route component={PageNotFound} />

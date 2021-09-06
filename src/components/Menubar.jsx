@@ -34,6 +34,11 @@ const Menubar = () => {
                     label: 'Nueva',
                     icon: 'pi pi-fw pi-plus',
                     url: '/obra'
+                },
+                {
+                    label: 'Listado',
+                    icon: 'pi pi-fw pi-list',
+                    url: '/obra-listado'
                 }
             ]
         },
@@ -45,6 +50,11 @@ const Menubar = () => {
                     label: 'Alta',
                     icon: 'pi pi-fw pi-plus',
                     url: '/producto'
+                },
+                {
+                    label: 'Listado',
+                    icon: 'pi pi-fw pi-list',
+                    url: '/producto-listado'
                 }
             ]
         },

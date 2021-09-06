@@ -34,6 +34,7 @@ const ListadoClientes = ({history}) => {
             razonSocial={cliente.razonSocial}
             cuit={cliente.cuit}
             mail={cliente.mail}
+            user={cliente.user.user}
         />
     ))
 

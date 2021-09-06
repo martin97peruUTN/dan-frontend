@@ -86,7 +86,7 @@ const RegistrarObra = ({history}) => {
                 console.log(response);
                 setLoadingSubmit(false);
                 showToast('Exito!','Cliente creado correctamente','success')
-                history.push("/")
+                history.push("/obra-listado")
             })
             .catch(function (error) {
                 console.log(error);
