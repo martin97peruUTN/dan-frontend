@@ -26,7 +26,7 @@ const ListadoPagos = (props) => {
                 props.history.push("/")
             }, 3000);
         })
-    }, [])
+    }, [pagos])
 
     const parseDate = (dateJson) => {
         if(dateJson){
@@ -39,6 +39,7 @@ const ListadoPagos = (props) => {
     const handleDelete = (id) => {
         //event.preventDefault();
         axios.delete(currentAccountService+'/pago/'+id).then((res) => {
+            showToast('Exito!','Pago eliminado correctamente','success')
             console.log('delete pago '+id)
         })
         .catch((err) => {
@@ -84,6 +85,7 @@ const ListadoPagos = (props) => {
         </div>
         :
         <div>
+            <Toast ref={toast} />
             {cardsMarkup}
         </div>
     )

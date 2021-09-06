@@ -26,7 +26,7 @@ const ListadoPedidos = (props) => {
                 props.history.push("/")
             }, 3000);
         })
-    }, [])
+    }, [pedidos])
 
     const parseDate = (dateJson) => {
         const date = new Date(JSON.parse(`"${dateJson}"`));
@@ -36,6 +36,7 @@ const ListadoPedidos = (props) => {
     const handleDelete = (id) => {
         //event.preventDefault();
         axios.delete(orderService+'/pedido/'+id).then((res) => {
+            showToast('Exito!','Producto eliminado correctamente','success')
             console.log('delete pedido '+id)
         })
         .catch((err) => {
@@ -68,6 +69,7 @@ const ListadoPedidos = (props) => {
         </div>
         :
         <div>
+            <Toast ref={toast} />
             {cardsMarkup}
         </div>
     )

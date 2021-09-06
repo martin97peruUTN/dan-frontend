@@ -41,7 +41,7 @@ const RegistrarMaterial = ({history}) => {
                 //Ver que hago aca
                 console.log(response);
                 setLoading(false);
-                showToast('Exito!','Cliente creado correctamente','success')
+                showToast('Exito!','Producto creado correctamente','success')
                 history.push("/producto-listado")
             })
             .catch(function (error) {
